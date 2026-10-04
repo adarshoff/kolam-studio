@@ -1,0 +1,3956 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kolam Studio</title>
+  <meta name="description" content="Speak a kolam into existence. A voice-controlled studio for South Indian sikku kolam and rangoli, in English and Tamil.">
+  <meta name="theme-color" content="#0e0b0a">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e0b0a'/%3E%3Cpath d='M36.3 10.5 C33.9 8.1 30.1 8.1 27.7 10.5 C25.3 12.9 25.3 16.7 27.7 19.1 C30.6 22.0 33.4 24.8 36.3 27.7 C39.2 30.6 42.0 33.4 44.9 36.3 C47.8 39.2 50.6 42.0 53.5 44.9 C55.9 47.3 55.9 51.1 53.5 53.5 C51.1 55.9 47.3 55.9 44.9 53.5 C42.5 51.1 42.5 47.3 44.9 44.9 C47.8 42.0 50.6 39.2 53.5 36.3 C55.9 33.9 55.9 30.1 53.5 27.7 C51.1 25.3 47.3 25.3 44.9 27.7 C42.0 30.6 39.2 33.4 36.3 36.3 C33.4 39.2 30.6 42.0 27.7 44.9 C24.8 47.8 22.0 50.6 19.1 53.5 C16.7 55.9 12.9 55.9 10.5 53.5 C8.1 51.1 8.1 47.3 10.5 44.9 C12.9 42.5 16.7 42.5 19.1 44.9 C22.0 47.8 24.8 50.6 27.7 53.5 C30.1 55.9 33.9 55.9 36.3 53.5 C38.7 51.1 38.7 47.3 36.3 44.9 C33.4 42.0 30.6 39.2 27.7 36.3 C24.8 33.4 22.0 30.6 19.1 27.7 C16.2 24.8 13.4 22.0 10.5 19.1 C8.1 16.7 8.1 12.9 10.5 10.5 C12.9 8.1 16.7 8.1 19.1 10.5 C21.5 12.9 21.5 16.7 19.1 19.1 C16.2 22.0 13.4 24.8 10.5 27.7 C8.1 30.1 8.1 33.9 10.5 36.3 C12.9 38.7 16.7 38.7 19.1 36.3 C22.0 33.4 24.8 30.6 27.7 27.7 C30.6 24.8 33.4 22.0 36.3 19.1 C39.2 16.2 42.0 13.4 44.9 10.5 C47.3 8.1 51.1 8.1 53.5 10.5 C55.9 12.9 55.9 16.7 53.5 19.1 C51.1 21.5 47.3 21.5 44.9 19.1 C42.0 16.2 39.2 13.4 36.3 10.5Z' fill='none' stroke='%23c9a24c' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cg fill='%23f5efe3'%3E%3Ccircle cx='14.8' cy='14.8' r='2.4'/%3E%3Ccircle cx='32.0' cy='14.8' r='2.4'/%3E%3Ccircle cx='49.2' cy='14.8' r='2.4'/%3E%3Ccircle cx='14.8' cy='32.0' r='2.4'/%3E%3Ccircle cx='32.0' cy='32.0' r='2.4'/%3E%3Ccircle cx='49.2' cy='32.0' r='2.4'/%3E%3Ccircle cx='14.8' cy='49.2' r='2.4'/%3E%3Ccircle cx='32.0' cy='49.2' r='2.4'/%3E%3Ccircle cx='49.2' cy='49.2' r='2.4'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <!-- Link previews -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Kolam Studio">
+  <meta property="og:title" content="Kolam Studio · Speak a kolam into existence">
+  <meta property="og:description" content="A voice-controlled studio for South Indian sikku kolam and rangoli. Say it in English or Tamil, and watch it drawn line by line.">
+  <meta property="og:url" content="https://adarshoff.github.io/kolam-studio/">
+  <meta property="og:image" content="https://adarshoff.github.io/kolam-studio/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A brass sikku kolam drawn around a grid of rice-flour dots, beside the words Kolam Studio">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kolam Studio · Speak a kolam into existence">
+  <meta name="twitter:description" content="A voice-controlled studio for South Indian sikku kolam and rangoli, in English and Tamil.">
+  <meta name="twitter:image" content="https://adarshoff.github.io/kolam-studio/og-image.png">
+  <script>
+    // Restore the last theme before first paint, so the page doesn't crossfade on load.
+    // Decide on the intro here too, so the app never flashes before it: first visit, or ?intro.
+    try {
+      const saved = localStorage.getItem('kolam-theme');
+      if (saved) document.documentElement.dataset.theme = saved;
+      const replay = new URLSearchParams(location.search).has('intro');
+      if (replay || !localStorage.getItem('kolam-studio-intro-seen')) {
+        document.documentElement.classList.add('intro-on');
+      }
+    } catch { /* storage unavailable: skip the intro */ }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500&family=Noto+Serif+Tamil:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Design tokens ===== */
+    /* Theme colours are registered so the browser can interpolate them: changing the theme
+       crossfades every colour derived from them, including the canvas, which reads them each frame. */
+    @property --granite    { syntax: '<color>'; inherits: true; initial-value: #0e0b0a; }
+    @property --rice-flour { syntax: '<color>'; inherits: true; initial-value: #f5efe3; }
+    @property --accent     { syntax: '<color>'; inherits: true; initial-value: #c9a24c; }
+    @property --flame      { syntax: '<color>'; inherits: true; initial-value: #c9a24c; }
+    @property --theme-line { syntax: '<color>'; inherits: true; initial-value: #f5efe3; }
+
+    :root {
+      /* Theme: Courtyard at Dusk (default) */
+      --granite:     #0e0b0a;   /* background */
+      --rice-flour:  #f5efe3;   /* text and pulli dots */
+      --accent:      #c9a24c;   /* UI accent: borders, thumbs, focus */
+      --flame:       #c9a24c;   /* orb, lamp tip, dust, shimmer */
+      --theme-line:  #f5efe3;   /* the theme's kolam line */
+
+      /* Fixed line colours for the swatches */
+      --kolam-line:  #eae833;
+      --kumkum-red:  #ba322a;
+      --brass-gold:  #c9a24c;
+
+      --theme-ease: cubic-bezier(0.4, 0, 0.2, 1);
+      transition:
+        --granite 800ms var(--theme-ease),
+        --rice-flour 800ms var(--theme-ease),
+        --accent 800ms var(--theme-ease),
+        --flame 800ms var(--theme-ease),
+        --theme-line 800ms var(--theme-ease);
+
+      --rice-flour-muted: color-mix(in srgb, var(--rice-flour) 62%, transparent);
+      --surface:          color-mix(in srgb, var(--rice-flour) 4%, transparent);
+      --hairline:         color-mix(in srgb, var(--accent) 22%, transparent);
+
+      --font-display: "Cormorant Garamond", "Noto Serif Tamil", Georgia, serif;
+      --font-ui:      "Inter", system-ui, sans-serif;
+      --font-tamil:   "Noto Serif Tamil", serif;
+
+      --radius: 16px;
+      --shadow-soft: 0 12px 40px rgb(0 0 0 / 0.45);
+      --glow-brass:  0 0 24px color-mix(in srgb, var(--accent) 15%, transparent);
+
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      --dur-fast: 300ms;
+      --dur-base: 450ms;
+      --dur-slow: 600ms;
+
+      --panel-w: 320px;
+    }
+
+    /* ===== Festival themes ===== */
+    :root[data-theme="pongal"] {      /* harvest: terracotta pots, turmeric, sugarcane */
+      --granite:    #7c3a22;
+      --rice-flour: #fbeedc;
+      --accent:     #8fb862;
+      --flame:      #f2b632;
+      --theme-line: #f4bb3a;
+    }
+    :root[data-theme="diwali"] {      /* royal purple night, gold */
+      --granite:    #1d0f33;
+      --rice-flour: #f6ead2;
+      --accent:     #d9ab45;
+      --flame:      #f0c05a;
+      --theme-line: #e9b949;
+    }
+    :root[data-theme="deepam"] {      /* Karthigai Deepam: lamps in the dark */
+      --granite:    #090605;
+      --rice-flour: #f7e4cc;
+      --accent:     #e0782c;
+      --flame:      #ff9a3c;
+      --theme-line: #ff8a2a;
+    }
+    :root[data-theme="margazhi"] {    /* dawn kolam on freshly sprinkled earth */
+      --granite:    #34251b;
+      --rice-flour: #fbf8f1;
+      --accent:     #c39a6b;
+      --flame:      #e8c27a;
+      --theme-line: #fbf8f1;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body { height: 100%; margin: 0; }
+
+    body {
+      background: var(--granite);
+      color: var(--rice-flour);
+      font-family: var(--font-ui);
+      font-size: 15px;
+      line-height: 1.5;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== Atmosphere: grain + vignette ===== */
+    .grain, .vignette {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .grain {
+      opacity: 0.09;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .vignette {
+      background:
+        radial-gradient(ellipse 60% 55% at 50% 48%, color-mix(in srgb, var(--accent) 5%, transparent), transparent 70%),
+        radial-gradient(ellipse 85% 80% at 50% 50%, transparent 45%, rgb(0 0 0 / 0.72) 100%);
+    }
+
+    /* ===== Layout ===== */
+    .app {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      grid-template-columns: minmax(0, 1fr);   /* never let the canvas's pixel size widen the page */
+      padding: 32px 48px 0;
+      transition: padding-right var(--dur-slow) var(--ease-out);
+    }
+    .app.panel-open { padding-right: calc(var(--panel-w) + 72px); }
+
+    /* ===== Header ===== */
+    .header {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+    }
+    .brand {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: clamp(32px, 4vw, 48px);
+      letter-spacing: 0.08em;
+      line-height: 1;
+    }
+    .brand em { font-style: italic; color: var(--accent); font-weight: 500; }
+    .brand-tamil {
+      font-family: var(--font-tamil);
+      font-size: clamp(18px, 2vw, 24px);
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      opacity: 0.9;
+    }
+    /* Kolam / Rangoli switch: a pill with a sliding brass thumb */
+    .mode-switch {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-self: center;
+      margin-left: 8px;
+      padding: 3px;
+      border-radius: 999px;
+      border: 1px solid var(--hairline);
+      background: color-mix(in srgb, var(--granite) 55%, transparent);
+    }
+    .mode-switch button {
+      position: relative;
+      z-index: 1;
+      padding: 6px 16px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--rice-flour-muted);
+      font: 500 13px var(--font-ui);
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: color var(--dur-base) var(--ease-out);
+    }
+    .mode-switch button[aria-checked="true"] { color: var(--rice-flour); }
+    .mode-switch button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .mode-thumb {
+      position: absolute;
+      top: 3px;
+      bottom: 3px;
+      left: 3px;
+      width: calc(50% - 3px);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--accent) 18%, transparent);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 50%, transparent);
+      transition: transform var(--dur-slow) var(--ease-out);
+    }
+    body[data-mode="rangoli"] .mode-switch:not(.lang-switch) .mode-thumb,
+    body[data-lang="ta-IN"] .lang-switch .mode-thumb { transform: translateX(100%); }
+    .lang-switch button { padding: 6px 12px; }
+    .lang-switch [lang="ta"] { font-family: var(--font-tamil); font-size: 12px; }
+
+    .header-rule {
+      flex: 1;
+      height: 1px;
+      align-self: center;
+      background: linear-gradient(90deg, var(--hairline), transparent);
+    }
+
+    /* ===== Stage: the doorstep threshold ===== */
+    .stage {
+      display: grid;
+      /* A fixed track: an auto column would size itself to the canvas's pixel dimensions,
+         which in turn follow the layout, a loop that can settle at the wrong size */
+      grid-template-columns: minmax(0, 1fr);
+      place-items: center;
+      padding: 24px 0 120px; /* room for the mic button */
+      min-height: 0;
+      min-width: 0;
+    }
+    .threshold {
+      position: relative;
+      width: min(100%, calc(100vh - 300px), 720px); /* leaves room for the caption above the mic */
+      aspect-ratio: 1;
+      padding: 20px;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, color-mix(in srgb, var(--rice-flour) 3.5%, transparent), color-mix(in srgb, var(--rice-flour) 1%, transparent)),
+        var(--granite);
+      box-shadow:
+        var(--shadow-soft),
+        inset 0 0 80px color-mix(in srgb, var(--rice-flour) 4%, transparent),
+        inset 0 0 0 1px color-mix(in srgb, var(--rice-flour) 5%, transparent);
+    }
+    /* Thin brass sill along the bottom of the threshold */
+    .threshold::after {
+      content: "";
+      position: absolute;
+      left: 12%;
+      right: 12%;
+      bottom: -1px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.8;
+    }
+    .threshold canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: calc(var(--radius) - 6px);
+    }
+    .threshold-caption {
+      position: absolute;
+      left: 0; right: 0;
+      bottom: -40px;
+      text-align: center;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--rice-flour-muted);
+      transition: opacity var(--dur-base) var(--ease-out);
+    }
+    /* The subtitles take the caption's place while someone is speaking */
+    body.speaking .threshold-caption { opacity: 0; }
+
+    /* ===== Voice: brass orb ===== */
+    .voice {
+      position: fixed;
+      left: 50%;
+      bottom: 34px;
+      z-index: 3;
+      width: 72px;
+      height: 72px;
+      margin-left: -36px;
+      transition: left var(--dur-slow) var(--ease-out);
+    }
+    .app.panel-open ~ .voice,
+    .app.panel-open ~ .toast { left: calc(50% - (var(--panel-w) + 24px) / 2); }
+
+    .orb {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      color: color-mix(in srgb, var(--flame) 18%, black);
+      background: radial-gradient(circle at 34% 28%, color-mix(in srgb, var(--flame) 30%, white) 0%, color-mix(in srgb, var(--flame) 75%, white) 18%, var(--flame) 42%, color-mix(in srgb, var(--flame) 65%, black) 72%, color-mix(in srgb, var(--flame) 35%, black) 100%);
+      box-shadow:
+        inset 0 -6px 14px rgb(0 0 0 / 0.38),
+        inset 0 3px 8px rgb(255 245 220 / 0.45),
+        0 12px 32px rgb(0 0 0 / 0.55);
+      animation: orb-breathe 5s ease-in-out infinite;
+      transition: filter var(--dur-base) var(--ease-out);
+    }
+    .orb:hover { filter: brightness(1.08); }
+    .orb:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+    .orb svg { width: 26px; height: 26px; }
+    @keyframes orb-breathe {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.035); }
+    }
+
+    /* Warm light behind the orb; JS scales it with the voice level */
+    .orb-glow {
+      position: absolute;
+      inset: -34px;
+      border-radius: 50%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--flame) 42%, transparent), color-mix(in srgb, var(--flame) 0%, transparent) 66%);
+      pointer-events: none;
+      animation: glow-breathe 5s ease-in-out infinite;
+      transition: transform 120ms linear;
+    }
+    @keyframes glow-breathe {
+      0%, 100% { opacity: 0.4; }
+      50%      { opacity: 0.75; }
+    }
+
+    .ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid color-mix(in srgb, var(--flame) 70%, transparent);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .wave {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 240px;
+      height: 240px;
+      margin: -120px 0 0 -120px;
+      pointer-events: none;
+    }
+
+    .voice.listening .orb {
+      filter: brightness(1.18) saturate(1.1);
+      animation-duration: 2.6s;
+    }
+    .voice.listening .orb-glow {
+      background: radial-gradient(circle, color-mix(in srgb, var(--flame) 60%, transparent), color-mix(in srgb, var(--flame) 0%, transparent) 68%);
+      animation-duration: 2.6s;
+    }
+    .voice.listening .ring { animation: ripple 2.7s var(--ease-out) infinite; }
+    .voice.listening .ring:nth-of-type(2) { animation-delay: 0.9s; }
+    .voice.listening .ring:nth-of-type(3) { animation-delay: 1.8s; }
+    @keyframes ripple {
+      0%   { transform: scale(1);   opacity: 0.7; }
+      100% { transform: scale(2.7); opacity: 0; }
+    }
+
+    /* ===== Subtitles ===== */
+    .subtitles {
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 24px);
+      width: min(680px, 86vw);
+      transform: translateX(-50%);
+      text-align: center;
+      pointer-events: none;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(20px, 2.1vw, 26px);
+      line-height: 1.35;
+      color: var(--rice-flour);
+      text-shadow: 0 2px 14px rgb(0 0 0 / 0.95), 0 0 2px rgb(0 0 0 / 0.8);
+      transition: opacity var(--dur-slow) var(--ease-out);
+    }
+    .subtitles.fading { opacity: 0; }
+    .subtitles .w {
+      display: inline-block;
+      margin: 0 0.14em;
+      opacity: 0;
+      transform: translateY(6px);
+      filter: blur(3px);
+      animation: word-in 420ms var(--ease-out) forwards;
+    }
+    @keyframes word-in { to { opacity: 1; transform: none; filter: none; } }
+
+    /* ===== Toast ===== */
+    .toast {
+      position: fixed;
+      top: 88px;   /* the gap between the header and the threshold */
+      left: 50%;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 20px 10px 10px;
+      border-radius: var(--radius);
+      border: 1px solid color-mix(in srgb, var(--rice-flour) 10%, transparent);
+      background: linear-gradient(160deg, color-mix(in srgb, var(--rice-flour) 10%, transparent), color-mix(in srgb, var(--rice-flour) 3%, transparent));
+      backdrop-filter: blur(18px) saturate(120%);
+      -webkit-backdrop-filter: blur(18px) saturate(120%);
+      box-shadow: var(--shadow-soft);
+      font-size: 14px;
+      font-weight: 500;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transform: translate(-50%, -10px) scale(0.98);
+      transition:
+        opacity var(--dur-base) var(--ease-out),
+        transform var(--dur-base) var(--ease-out),
+        left var(--dur-slow) var(--ease-out);
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0) scale(1); }
+    .toast-icon {
+      width: 26px;
+      height: 26px;
+      flex: none;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 16%, transparent);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent);
+    }
+    .toast-icon svg { width: 14px; height: 14px; }
+    .toast-icon path { stroke-dasharray: 24; stroke-dashoffset: 24; }
+    .toast.show .toast-icon path { animation: tick 500ms var(--ease-out) 120ms forwards; }
+    @keyframes tick { to { stroke-dashoffset: 0; } }
+    .toast.error .toast-icon {
+      color: #e0756c;
+      background: rgb(186 50 42 / 0.16);
+      box-shadow: inset 0 0 0 1px rgb(186 50 42 / 0.5);
+    }
+    .toast.hint .toast-icon {
+      color: var(--rice-flour-muted);
+      background: color-mix(in srgb, var(--rice-flour) 6%, transparent);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--rice-flour) 18%, transparent);
+    }
+
+    /* ===== Glass side panel ===== */
+    .panel {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      bottom: 24px;
+      z-index: 2;
+      width: var(--panel-w);
+      padding: 32px 28px;
+      border-radius: var(--radius);
+      border: 1px solid color-mix(in srgb, var(--rice-flour) 8%, transparent);
+      background: linear-gradient(160deg, color-mix(in srgb, var(--rice-flour) 7%, transparent), color-mix(in srgb, var(--rice-flour) 2%, transparent));
+      backdrop-filter: blur(22px) saturate(120%);
+      -webkit-backdrop-filter: blur(22px) saturate(120%);
+      box-shadow: var(--shadow-soft);
+      overflow-y: auto;
+      transition:
+        transform var(--dur-slow) var(--ease-out),
+        opacity var(--dur-base) var(--ease-out);
+    }
+    .panel.collapsed {
+      transform: translateX(calc(100% + 32px));
+      opacity: 0;
+      pointer-events: none;
+    }
+    .panel h2 {
+      margin: 0 0 4px;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 28px;
+      letter-spacing: 0.04em;
+    }
+    .panel .sub { margin: 0 0 32px; color: var(--rice-flour-muted); font-size: 13px; }
+
+    .field { margin-bottom: 28px; }
+    .label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--rice-flour-muted);
+    }
+    .label output { color: var(--rice-flour); letter-spacing: 0.04em; }
+
+    /* Custom slider: brass fill up to the thumb, hairline beyond */
+    .slider {
+      --fill: 50%;
+      display: block;
+      width: 100%;
+      height: 4px;
+      margin: 10px 0;
+      appearance: none;
+      -webkit-appearance: none;
+      border-radius: 4px;
+      background: linear-gradient(90deg,
+        color-mix(in srgb, var(--accent) 35%, transparent) 0%,
+        var(--accent) var(--fill),
+        color-mix(in srgb, var(--rice-flour) 10%, transparent) var(--fill));
+      outline: none;
+      cursor: pointer;
+    }
+    .slider::-webkit-slider-runnable-track { height: 4px; background: transparent; border-radius: 4px; }
+    .slider::-moz-range-track { height: 4px; background: transparent; }
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px; height: 18px;
+      margin-top: -7px;
+      border-radius: 50%;
+      border: 0;
+      background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--accent) 60%, white), var(--accent) 55%, color-mix(in srgb, var(--accent) 70%, black));
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--granite) 90%, transparent), 0 0 0 5px color-mix(in srgb, var(--accent) 35%, transparent), 0 4px 14px rgb(0 0 0 / 0.5);
+      transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+    }
+    .slider::-moz-range-thumb {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 0;
+      background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--accent) 60%, white), var(--accent) 55%, color-mix(in srgb, var(--accent) 70%, black));
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--granite) 90%, transparent), 0 0 0 5px color-mix(in srgb, var(--accent) 35%, transparent), 0 4px 14px rgb(0 0 0 / 0.5);
+      transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+    }
+    .slider:hover::-webkit-slider-thumb { transform: scale(1.08); }
+    .slider:hover::-moz-range-thumb { transform: scale(1.08); }
+    .slider:active::-webkit-slider-thumb,
+    .slider:focus-visible::-webkit-slider-thumb {
+      transform: scale(1.15);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--granite) 90%, transparent), 0 0 0 5px var(--accent), 0 0 22px color-mix(in srgb, var(--accent) 45%, transparent);
+    }
+    .slider:active::-moz-range-thumb,
+    .slider:focus-visible::-moz-range-thumb {
+      transform: scale(1.15);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--granite) 90%, transparent), 0 0 0 5px var(--accent), 0 0 22px color-mix(in srgb, var(--accent) 45%, transparent);
+    }
+
+    /* Tick marks under the grid slider */
+    .ticks {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 9px; /* align with thumb centre at each end */
+      margin-top: 6px;
+    }
+    .ticks span {
+      position: relative;
+      width: 1px;
+      height: 6px;
+      background: color-mix(in srgb, var(--rice-flour) 18%, transparent);
+      transition: background var(--dur-fast) var(--ease-out);
+    }
+    .ticks span.on { background: var(--accent); }
+    .ticks span[data-label]::after {
+      content: attr(data-label);
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      color: var(--rice-flour-muted);
+    }
+    .field.has-ticks { margin-bottom: 44px; }
+
+    .swatches { display: flex; gap: 12px; }
+    .swatch {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid color-mix(in srgb, var(--rice-flour) 15%, transparent);
+      cursor: pointer;
+      transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+    }
+    .swatch:hover { transform: scale(1.06); }
+    .swatch[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--granite), 0 0 0 4px var(--accent); }
+
+    /* Theme chips */
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px 6px 6px;
+      border-radius: 999px;
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      color: var(--rice-flour-muted);
+      font: 500 13px var(--font-ui);
+      cursor: pointer;
+      transition:
+        color var(--dur-fast) var(--ease-out),
+        border-color var(--dur-fast) var(--ease-out),
+        background var(--dur-fast) var(--ease-out),
+        transform var(--dur-fast) var(--ease-out);
+    }
+    .chip:hover { color: var(--rice-flour); border-color: color-mix(in srgb, var(--accent) 55%, transparent); transform: translateY(-1px); }
+    .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .chip[aria-checked="true"] {
+      color: var(--rice-flour);
+      border-color: color-mix(in srgb, var(--accent) 70%, transparent);
+      background: color-mix(in srgb, var(--accent) 16%, transparent);
+    }
+    /* A tiny preview: the theme's ground with a ring of its line colour */
+    .chip-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--c-bg);
+      box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.14), inset 0 0 0 5px var(--c-bg), inset 0 0 0 6.5px var(--c-line);
+    }
+
+    /* The theme swatch shows the theme's line colour beside its accent */
+    .swatch-theme { background: conic-gradient(from 225deg, var(--theme-line) 0 50%, var(--accent) 0 100%); }
+
+    /* Segmented control */
+    .segmented {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 4px;
+      gap: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--hairline);
+      background: color-mix(in srgb, var(--granite) 35%, transparent);
+    }
+    .segmented button {
+      padding: 9px 12px;
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
+      color: var(--rice-flour-muted);
+      font: 500 13px var(--font-ui);
+      cursor: pointer;
+      transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+    }
+    .segmented button:hover { color: var(--rice-flour); }
+    .segmented button[aria-checked="true"] {
+      background: color-mix(in srgb, var(--accent) 16%, transparent);
+      color: var(--rice-flour);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent);
+    }
+    .segmented button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .note { margin: 10px 0 0; font-size: 12px; color: var(--rice-flour-muted); }
+
+    /* Toggle switch */
+    .toggle {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .toggle input { position: absolute; opacity: 0; pointer-events: none; }
+    .toggle-track {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      border-radius: 11px;
+      border: 1px solid var(--hairline);
+      background: color-mix(in srgb, var(--granite) 40%, transparent);
+      transition: background var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+    }
+    .toggle-track::after {
+      content: "";
+      position: absolute;
+      top: 3px; left: 3px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--rice-flour-muted);
+      transition: transform var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out);
+    }
+    .toggle input:checked + .toggle-track { background: color-mix(in srgb, var(--accent) 20%, transparent); border-color: color-mix(in srgb, var(--accent) 55%, transparent); }
+    .toggle input:checked + .toggle-track::after { transform: translateX(18px); background: var(--accent); }
+    .toggle input:focus-visible + .toggle-track { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    /* Fields that belong to one mode fade in when that mode is active */
+    body[data-mode="rangoli"] .kolam-only,
+    body:not([data-mode="rangoli"]) .rangoli-only { display: none; }
+    .kolam-only, .rangoli-only { animation: field-in var(--dur-base) var(--ease-out); }
+    @keyframes field-in { from { opacity: 0; transform: translateY(6px); } }
+
+    /* Gallery strip */
+    .gallery {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 2px 2px 10px;
+      scroll-snap-type: x proximity;
+      scrollbar-width: thin;
+      scrollbar-color: var(--hairline) transparent;
+    }
+    .g-item {
+      position: relative;
+      flex: none;
+      width: 68px;
+      height: 68px;
+      padding: 0;
+      border-radius: 12px;
+      border: 1px solid var(--hairline);
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--surface);
+      scroll-snap-align: start;
+      animation: g-in var(--dur-base) var(--ease-out);
+      transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+    }
+    .g-open {
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: 0;
+      background: none;
+      cursor: pointer;
+    }
+    .g-open:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: 12px; }
+    .g-item img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .g-item:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--accent) 60%, transparent); }
+    .g-remove { border: 0; cursor: pointer; }
+    .g-item.current { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), var(--glow-brass); }
+    .g-badge {
+      position: absolute;
+      left: 4px;
+      bottom: 4px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--granite) 75%, transparent);
+      color: var(--rice-flour);
+      font: 500 9px var(--font-ui);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .g-remove {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      width: 18px;
+      height: 18px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--granite) 80%, transparent);
+      color: var(--rice-flour);
+      font-size: 12px;
+      line-height: 1;
+      opacity: 0;
+      transition: opacity var(--dur-fast) var(--ease-out);
+    }
+    .g-item:hover .g-remove, .g-item:focus-within .g-remove { opacity: 1; }
+    @keyframes g-in { from { opacity: 0; transform: scale(0.9); } }
+    .gallery-field { margin-top: 32px; }
+    .gallery-empty { margin: 0; font-size: 12px; color: var(--rice-flour-muted); }
+
+    /* Surprise shuffle: chips flicker as if being chosen */
+    .chip.shuffle-on {
+      color: var(--rice-flour);
+      border-color: color-mix(in srgb, var(--accent) 70%, transparent);
+      background: color-mix(in srgb, var(--accent) 22%, transparent);
+      transition-duration: 60ms;
+    }
+
+    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+    .btn {
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      color: var(--rice-flour);
+      font: 500 14px var(--font-ui);
+      cursor: pointer;
+      transition:
+        background var(--dur-fast) var(--ease-out),
+        border-color var(--dur-fast) var(--ease-out),
+        transform var(--dur-fast) var(--ease-out);
+    }
+    .btn:hover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, transparent); transform: translateY(-1px); }
+    .btn:focus-visible, .swatch:focus-visible, .panel-toggle:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn svg { width: 15px; height: 15px; flex: none; }
+    .btn.surprise { grid-column: 1 / -1; }
+    .btn.surprise svg { color: var(--accent); }
+    .btn.primary { grid-column: 1 / -1; background: color-mix(in srgb, var(--accent) 14%, transparent); border-color: color-mix(in srgb, var(--accent) 45%, transparent); }
+
+    /* Panel toggle tab */
+    .panel-toggle {
+      position: fixed;
+      top: 32px;
+      right: 32px;
+      z-index: 4;
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      border: 1px solid var(--hairline);
+      background: color-mix(in srgb, var(--granite) 55%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: var(--rice-flour);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+    }
+    .panel-toggle:hover { border-color: var(--accent); }
+    .panel-toggle svg { width: 18px; height: 18px; transition: transform var(--dur-base) var(--ease-out); }
+    .panel-toggle[aria-expanded="true"] { right: calc(var(--panel-w) + 40px); }
+    .panel-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+    /* ===== Staged entrance ===== */
+    .enter {
+      opacity: 0;
+      transform: translateY(14px);
+      animation: rise var(--dur-slow) var(--ease-out) forwards;
+      animation-delay: calc(var(--i) * 180ms + 150ms);
+    }
+    .panel.enter { transform: translateX(24px); animation-name: slide-in; }
+    @keyframes rise     { to { opacity: 1; transform: translateY(0); } }
+    @keyframes slide-in { to { opacity: 1; transform: translateX(0); } }
+    /* Don't let the entrance fight the collapse transition */
+    .panel.enter.entered { transform: none; }   /* .panel.enter outranks .entered on its own */
+    .panel.collapsed.entered { opacity: 0; transform: translateX(calc(100% + 32px)); }
+    .entered { animation: none; opacity: 1; transform: none; }
+
+    /* ===== First-visit intro ===== */
+    .intro {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: none;
+      place-items: center;
+      background-color: #000;
+      cursor: pointer;
+      transition: background-color 900ms var(--theme-ease);
+    }
+    html.intro-on .intro { display: grid; }
+    .intro-inner { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+
+    /* Line heights and letter spacing match the header, so the glide can land exactly on it */
+    .intro-tamil {
+      font-family: var(--font-tamil);
+      font-size: clamp(64px, 11vw, 150px);
+      line-height: 1.5;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      opacity: 0;
+      filter: blur(14px);
+      transform: scale(1.05);
+      text-shadow: 0 0 48px color-mix(in srgb, var(--accent) 40%, transparent);
+      transition: opacity 1400ms var(--theme-ease), filter 1400ms var(--theme-ease), transform 1700ms var(--ease-out);
+    }
+    .intro-title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: clamp(40px, 6vw, 76px);
+      line-height: 1;
+      letter-spacing: 0.08em;
+      color: var(--rice-flour);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 900ms var(--theme-ease), transform 1100ms var(--ease-out);
+    }
+    .intro-title em { font-style: italic; font-weight: 500; color: var(--accent); }
+    .intro-tag {
+      margin: 6px 0 0;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(18px, 2vw, 24px);
+      color: var(--rice-flour-muted);
+      opacity: 0;
+      transition: opacity 900ms var(--theme-ease) 450ms;
+    }
+    .intro-skip {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 36px;
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: color-mix(in srgb, var(--rice-flour) 35%, transparent);
+      opacity: 0;
+      transition: opacity 900ms var(--theme-ease) 900ms;
+    }
+    .intro.stage-1 .intro-tamil { opacity: 0.9; filter: none; transform: none; }
+    .intro.stage-2 .intro-title { opacity: 1; transform: none; }
+    .intro.stage-2 .intro-tag,
+    .intro.stage-2 .intro-skip { opacity: 1; }
+
+    /* The glide: the overlay dissolves while the title and Tamil word fly into the header */
+    .intro.gliding { background-color: transparent; pointer-events: none; }
+    .intro.gliding .intro-tag,
+    .intro.gliding .intro-skip { opacity: 0; transition: opacity 350ms var(--theme-ease); }
+    .intro.gliding .intro-tamil,
+    .intro.gliding .intro-title {
+      opacity: 1;
+      filter: none;
+      text-shadow: none;
+      transition: transform 1000ms cubic-bezier(0.65, 0, 0.35, 1), text-shadow 1000ms var(--theme-ease), opacity 300ms;
+    }
+    .intro.gliding .intro-tamil { opacity: 0.9; }
+
+    /* While the intro plays, the page waits: entrances pause and the header hides */
+    html.intro-on .enter { animation-play-state: paused; }
+    html.intro-on .header > * { opacity: 0; }
+    .header > * { transition: opacity var(--dur-slow) var(--ease-out); }
+    .header > .brand, .header > .brand-tamil { transition: none; }
+
+    /* ===== Mic hint ===== */
+    .mic-hint {
+      position: absolute;
+      left: calc(100% + 22px);
+      top: 50%;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+      background: linear-gradient(160deg, color-mix(in srgb, var(--rice-flour) 10%, transparent), color-mix(in srgb, var(--rice-flour) 3%, transparent));
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: var(--shadow-soft);
+      color: var(--rice-flour-muted);
+      font: 500 13px var(--font-ui);
+      white-space: nowrap;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-8px, -50%);
+      transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+    }
+    .mic-hint q { color: var(--rice-flour); font-family: var(--font-display); font-style: italic; font-size: 16px; }
+    .mic-hint::before {                      /* a small notch pointing at the orb */
+      content: "";
+      position: absolute;
+      left: -5px;
+      top: 50%;
+      width: 9px;
+      height: 9px;
+      margin-top: -5px;
+      border-left: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+      background: color-mix(in srgb, var(--granite) 70%, transparent);
+      transform: rotate(45deg);
+    }
+    .mic-hint.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(0, -50%);
+      animation: hint-float 3.2s ease-in-out infinite;
+    }
+    @keyframes hint-float {
+      0%, 100% { transform: translate(0, -50%); }
+      50%      { transform: translate(3px, -50%); }
+    }
+
+    /* ===== Voice command cheat sheet ===== */
+    .cheats { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+    .cheat-lead { margin: 0 0 16px; font-size: 12px; line-height: 1.7; color: var(--rice-flour-muted); }
+    .cheat-lead kbd {
+      padding: 1px 7px;
+      border-radius: 6px;
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      font: 500 11px var(--font-ui);
+      color: var(--rice-flour);
+    }
+    .cheat-group { margin-bottom: 14px; }
+    .cheat-head {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: color-mix(in srgb, var(--rice-flour) 45%, transparent);
+    }
+    .pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill {
+      padding: 3px 11px 4px;
+      border-radius: 999px;
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      color: var(--rice-flour-muted);
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 15px;
+      cursor: pointer;
+      transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+    }
+    .pills[lang="ta"] .pill { font-style: normal; font-size: 13px; }
+    .pill::before { content: "“"; opacity: 0.5; }
+    .pill::after { content: "”"; opacity: 0.5; }
+    .pill:hover {
+      color: var(--rice-flour);
+      border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+    }
+    .pill:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .replay {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--rice-flour-muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--hairline);
+      transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+    }
+    .replay:hover { color: var(--rice-flour); border-color: var(--accent); }
+
+    /* ===== Responsive ===== */
+    /* ===== Micro-interactions ===== */
+    /* Every control dips a little when pressed and springs back on release. The separate
+       `scale` property composes with existing hover lifts and the orb's breathing. */
+    .btn, .chip, .pill, .swatch, .segmented button, .mode-switch button, .g-item, .panel-toggle,
+    .orb, .mic-hint, .sheet-handle, .g-remove {
+      -webkit-tap-highlight-color: transparent;
+      transition-property: color, background, border-color, box-shadow, transform, scale, opacity, filter;
+    }
+    .btn:active, .chip:active, .pill:active, .segmented button:active,
+    .mode-switch button:active, .panel-toggle:active, .mic-hint:active { scale: 0.96; transition-duration: 90ms; }
+    .swatch:active, .g-item:active { scale: 0.93; transition-duration: 90ms; }
+    .orb:active { scale: 0.94; transition-duration: 90ms; }
+    .btn, .chip, .pill, .segmented button, .mode-switch button, .orb, .g-open { position: relative; overflow: hidden; }
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(circle, color-mix(in srgb, var(--accent) 42%, transparent), transparent 68%);
+      transform: scale(0);
+      animation: ripple-out 600ms var(--ease-out) forwards;
+    }
+    @keyframes ripple-out { to { transform: scale(1); opacity: 0; } }
+
+    /* ===== Footer ===== */
+    .site-footer, .panel-footer {
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      color: color-mix(in srgb, var(--rice-flour) 50%, transparent);
+    }
+    .site-footer {
+      position: fixed;
+      left: 48px;
+      bottom: 28px;
+      z-index: 2;
+    }
+    .panel-footer { margin: 28px 0 0; text-align: center; }
+    .site-footer a, .panel-footer a {
+      color: var(--rice-flour);
+      text-decoration: none;
+      border-bottom: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+      transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+    }
+    .site-footer a:hover, .panel-footer a:hover { color: var(--accent); border-color: var(--accent); }
+    .site-footer a:focus-visible, .panel-footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+    .sheet-handle { display: none; }
+    .panel-footer { display: none; }
+
+    @media (max-width: 900px) {
+      :root { --peek: 78px; }
+      .app, .app.panel-open { padding: 16px 16px calc(var(--peek) + 8px); }
+      .stage { padding: 12px 0 132px; }
+      /* The canvas spans the screen width, as long as there's height for it */
+      .threshold { width: min(100%, calc(100svh - 340px)); padding: 8px; }
+      .voice { bottom: calc(var(--peek) + 18px); transition: opacity var(--dur-base) var(--ease-out); }
+      /* An open sheet covers the courtyard; the orb steps aside until it closes */
+      .app.panel-open ~ .voice { opacity: 0; pointer-events: none; }
+      .threshold-caption { font-size: 10px; letter-spacing: 0.12em; bottom: -34px; }
+      .app.panel-open ~ .voice,
+      .app.panel-open ~ .toast { left: 50%; }
+      .toast { top: 16px; max-width: calc(100vw - 32px); white-space: normal; }
+
+      /* Controls become a bottom sheet: resting, only the handle and title peek up */
+      .panel-toggle { display: none; }
+      .panel {
+        left: 0;
+        right: 0;
+        top: auto;
+        bottom: 0;
+        width: auto;
+        max-height: 86svh;
+        padding: 0 20px calc(28px + env(safe-area-inset-bottom));
+        border-radius: 22px 22px 0 0;
+        border-bottom: 0;
+        transition: transform 520ms var(--ease-out);
+      }
+      .panel.collapsed,
+      .panel.collapsed.entered {
+        opacity: 1;
+        pointer-events: auto;
+        overflow: hidden;
+        transform: translateY(calc(100% - var(--peek)));
+      }
+      .sheet-handle {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        display: grid;
+        place-items: center;
+        width: calc(100% + 40px);
+        height: 30px;
+        margin: 0 -20px 2px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        cursor: grab;
+        touch-action: none;
+      }
+      .sheet-handle span {
+        width: 40px;
+        height: 4px;
+        border-radius: 2px;
+        background: color-mix(in srgb, var(--rice-flour) 30%, transparent);
+        transition: background var(--dur-fast) var(--ease-out), width var(--dur-fast) var(--ease-out);
+      }
+      .sheet-handle:hover span, .sheet-handle:active span { background: var(--accent); width: 52px; }
+      .panel h2 { font-size: 24px; touch-action: none; cursor: grab; }
+      .panel .sub { margin-bottom: 24px; }
+      .panel-footer { display: block; }
+      .site-footer { display: none; }
+
+      .header-rule { display: none; }
+      .header { flex-wrap: wrap; row-gap: 10px; }
+      .mode-switch { margin-left: 0; }
+      /* No room beside the orb on a phone: the hint sits above it instead */
+      .mic-hint { left: 50%; top: auto; bottom: calc(100% + 18px); transform: translate(-50%, 6px); }
+      .mic-hint.show { transform: translate(-50%, 0); animation: none; }
+      .mic-hint::before { display: none; }
+      body.hinting .threshold-caption { opacity: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 1ms !important;
+        animation-delay: 0ms !important;
+        transition-duration: 1ms !important;
+      }
+      .orb, .orb-glow, .voice.listening .ring, .mic-hint.show { animation: none !important; }
+      /* No movement on press or hover; colour changes still give feedback */
+      *:active, *:hover { scale: none !important; }
+      .chip:hover, .btn:hover, .g-item:hover, .swatch:hover { transform: none !important; }
+      .ripple { display: none; }
+    }
+  </style>
+</head>
+<body data-mode="kolam" data-lang="en-IN">
+  <div class="intro" id="intro" aria-label="Kolam Studio">
+    <div class="intro-inner">
+      <span class="intro-tamil" id="introTamil" lang="ta">கோலம்</span>
+      <h2 class="intro-title" id="introTitle">Kolam <em>Studio</em></h2>
+      <p class="intro-tag">Speak a kolam into existence.</p>
+    </div>
+    <span class="intro-skip">Click or press any key to skip</span>
+  </div>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <div class="app panel-open" id="app">
+    <header class="header enter" style="--i:0">
+      <h1 class="brand">Kolam <em>Studio</em></h1>
+      <span class="brand-tamil" lang="ta">கோலம்</span>
+      <div class="mode-switch" role="radiogroup" aria-label="Mode">
+        <span class="mode-thumb" aria-hidden="true"></span>
+        <button role="radio" aria-checked="true" data-mode="kolam">Kolam</button>
+        <button role="radio" aria-checked="false" data-mode="rangoli">Rangoli</button>
+      </div>
+      <div class="mode-switch lang-switch" role="radiogroup" aria-label="Speech language">
+        <span class="mode-thumb" aria-hidden="true"></span>
+        <button role="radio" aria-checked="true" data-lang="en-IN" title="English (India)">EN</button>
+        <button role="radio" aria-checked="false" data-lang="ta-IN" title="Tamil" lang="ta">தமிழ்</button>
+      </div>
+      <span class="header-rule" aria-hidden="true"></span>
+    </header>
+
+    <main class="stage">
+      <div class="threshold enter" style="--i:1">
+        <canvas id="kolam" aria-label="Kolam canvas"></canvas>
+        <div class="threshold-caption">Sikku kolam · 7 × 7 pulli</div>
+      </div>
+    </main>
+  </div>
+
+  <div class="voice enter" style="--i:3" id="voice">
+    <div class="subtitles" id="subtitles" aria-live="polite"></div>
+    <button class="mic-hint" id="micHint" tabindex="-1" aria-hidden="true">
+      Try saying <q>surprise me</q>
+    </button>
+    <div class="orb-glow" id="orbGlow" aria-hidden="true"></div>
+    <canvas class="wave" id="wave" aria-hidden="true"></canvas>
+    <span class="ring" aria-hidden="true"></span>
+    <span class="ring" aria-hidden="true"></span>
+    <span class="ring" aria-hidden="true"></span>
+    <button class="orb" id="mic" aria-label="Start listening (Space)" aria-pressed="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="3" width="6" height="11" rx="3"/>
+        <path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <span class="toast-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path id="toastPath" d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+    </span>
+    <span id="toastText"></span>
+  </div>
+
+  <button class="panel-toggle enter" style="--i:2" id="panelToggle" aria-label="Toggle controls" aria-expanded="true" aria-controls="panel">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M9 6l6 6-6 6"/>
+    </svg>
+  </button>
+
+  <footer class="site-footer enter" style="--i:4">
+    Built entirely by voice with
+    <a href="https://wisprflow.ai" target="_blank" rel="noopener noreferrer">Wispr Flow<span aria-hidden="true"> ↗</span></a>
+  </footer>
+
+  <aside class="panel enter" style="--i:2" id="panel" aria-label="Controls">
+    <button class="sheet-handle" id="sheetHandle" aria-label="Show or hide controls" aria-expanded="true" aria-controls="panel"><span></span></button>
+    <h2>Controls</h2>
+    <p class="sub">Shape the pattern by hand or by voice.</p>
+
+    <div class="field">
+      <span class="label">Theme</span>
+      <div class="chips" role="radiogroup" aria-label="Theme">
+        <button class="chip" role="radio" aria-checked="true" data-theme="dusk" style="--c-bg:#0e0b0a; --c-line:#f5efe3">
+          <span class="chip-dot" aria-hidden="true"></span>Dusk
+        </button>
+        <button class="chip" role="radio" aria-checked="false" data-theme="pongal" title="பொங்கல்" style="--c-bg:#7c3a22; --c-line:#f4bb3a">
+          <span class="chip-dot" aria-hidden="true"></span>Pongal
+        </button>
+        <button class="chip" role="radio" aria-checked="false" data-theme="diwali" title="தீபாவளி" style="--c-bg:#1d0f33; --c-line:#e9b949">
+          <span class="chip-dot" aria-hidden="true"></span>Diwali
+        </button>
+        <button class="chip" role="radio" aria-checked="false" data-theme="deepam" title="கார்த்திகை தீபம்" style="--c-bg:#090605; --c-line:#ff8a2a">
+          <span class="chip-dot" aria-hidden="true"></span>Deepam
+        </button>
+        <button class="chip" role="radio" aria-checked="false" data-theme="margazhi" title="மார்கழி" style="--c-bg:#34251b; --c-line:#fbf8f1">
+          <span class="chip-dot" aria-hidden="true"></span>Margazhi
+        </button>
+      </div>
+    </div>
+
+    <div class="field rangoli-only">
+      <span class="label">Petals</span>
+      <div class="segmented" role="radiogroup" aria-label="Petals">
+        <button role="radio" aria-checked="false" data-folds="8">8 petals</button>
+        <button role="radio" aria-checked="true" data-folds="12">12 petals</button>
+      </div>
+    </div>
+
+    <div class="field has-ticks kolam-only">
+      <label class="label" for="gridSize">Grid <output id="gridOut">7 × 7</output></label>
+      <input type="range" class="slider" id="gridSize" min="3" max="11" step="1" value="7">
+      <div class="ticks" id="gridTicks" aria-hidden="true"></div>
+    </div>
+
+    <div class="field">
+      <label class="label" for="speed">Drawing pace <output id="speedOut">Calm</output></label>
+      <input type="range" class="slider" id="speed" min="1" max="3" step="1" value="2">
+    </div>
+
+    <div class="field kolam-only">
+      <label class="label" for="weave">Weave <output id="weaveOut">Balanced</output></label>
+      <input type="range" class="slider" id="weave" min="20" max="80" step="5" value="50">
+    </div>
+
+    <div class="field kolam-only">
+      <span class="label">Symmetry</span>
+      <div class="segmented" role="radiogroup" aria-label="Symmetry">
+        <button role="radio" aria-checked="true" data-symmetry="rotational">Rotational</button>
+        <button role="radio" aria-checked="false" data-symmetry="mirrored">Mirrored</button>
+      </div>
+      <p class="note" id="symNote" hidden>Even grids can only close into one line when mirrored left to right.</p>
+    </div>
+
+    <div class="field kolam-only">
+      <label class="toggle">
+        <input type="checkbox" id="showMirrors">
+        <span class="toggle-track" aria-hidden="true"></span>
+        Show mirrors
+      </label>
+    </div>
+
+    <div class="field kolam-only">
+      <span class="label">Line colour</span>
+      <div class="swatches" role="group" aria-label="Line colour">
+        <button class="swatch swatch-theme" data-color="--theme-line" aria-label="Theme colour" aria-pressed="true"></button>
+        <button class="swatch" style="background:var(--rice-flour)" data-color="--rice-flour" aria-label="Rice flour white" aria-pressed="false"></button>
+        <button class="swatch" style="background:var(--kolam-line)" data-color="--kolam-line" aria-label="Kolam yellow" aria-pressed="false"></button>
+        <button class="swatch" style="background:var(--kumkum-red)" data-color="--kumkum-red" aria-label="Kumkum red" aria-pressed="false"></button>
+        <button class="swatch" style="background:var(--brass-gold)" data-color="--brass-gold" aria-label="Brass gold" aria-pressed="false"></button>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn primary" id="drawBtn">Draw kolam</button>
+      <button class="btn surprise" id="surpriseBtn">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l1.9 6.1L20 10.5l-6.1 1.9L12 18.5l-1.9-6.1L4 10.5l6.1-1.9z"/></svg>
+        Surprise me
+      </button>
+      <button class="btn" id="clearBtn">Clear</button>
+      <button class="btn" id="saveBtn" title="Download a high-resolution PNG and keep it in the gallery">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+        Save
+      </button>
+    </div>
+
+    <div class="field gallery-field">
+      <span class="label">Gallery <output id="galleryCount"></output></span>
+      <div class="gallery" id="gallery" role="list" aria-label="Saved designs"></div>
+    </div>
+
+    <div class="field cheats">
+      <span class="label">Voice commands</span>
+      <p class="cheat-lead">Press <kbd>Space</kbd> or tap the orb, then speak. Tap a phrase to try it.</p>
+      <div class="cheat-group">
+        <span class="cheat-head">Kolam</span>
+        <div class="pills">
+          <button class="pill" data-say="grid nine">grid nine</button>
+          <button class="pill" data-say="nine by nine">nine by nine</button>
+          <button class="pill" data-say="new kolam">new kolam</button>
+          <button class="pill" data-say="colour red">colour red</button>
+          <button class="pill" data-say="clear">clear</button>
+        </div>
+      </div>
+      <div class="cheat-group">
+        <span class="cheat-head">Rangoli</span>
+        <div class="pills">
+          <button class="pill" data-say="rangoli mode">rangoli mode</button>
+          <button class="pill" data-say="new rangoli">new rangoli</button>
+          <button class="pill" data-say="eight petals">eight petals</button>
+          <button class="pill" data-say="twelve petals">twelve petals</button>
+        </div>
+      </div>
+      <div class="cheat-group">
+        <span class="cheat-head">Anywhere</span>
+        <div class="pills">
+          <button class="pill" data-say="surprise me">surprise me</button>
+          <button class="pill" data-say="Diwali theme">Diwali theme</button>
+          <button class="pill" data-say="Margazhi theme">Margazhi theme</button>
+          <button class="pill" data-say="switch mode">switch mode</button>
+          <button class="pill" data-say="save">save</button>
+          <button class="pill" data-say="stop listening">stop listening</button>
+        </div>
+      </div>
+      <div class="cheat-group">
+        <span class="cheat-head">தமிழ் · switch to தமிழ் in the header</span>
+        <div class="pills" lang="ta">
+          <button class="pill" data-say="கோலம் போடு" title="kolam podu · new kolam">கோலம் போடு</button>
+          <button class="pill" data-say="ரங்கோலி போடு" title="rangoli podu · new rangoli">ரங்கோலி போடு</button>
+          <button class="pill" data-say="பொங்கல் கோலம்" title="Pongal kolam · Pongal theme">பொங்கல் கோலம்</button>
+          <button class="pill" data-say="ஒன்பது கட்டம்" title="onbathu kattam · grid nine">ஒன்பது கட்டம்</button>
+          <button class="pill" data-say="எட்டு இதழ்" title="ettu ithazh · eight petals">எட்டு இதழ்</button>
+          <button class="pill" data-say="அழி" title="azhi · clear">அழி</button>
+        </div>
+      </div>
+      <a class="replay" href="?intro">Replay the intro</a>
+    </div>
+
+    <p class="panel-footer">
+      Built entirely by voice with
+      <a href="https://wisprflow.ai" target="_blank" rel="noopener noreferrer">Wispr Flow<span aria-hidden="true"> ↗</span></a>
+    </p>
+  </aside>
+
+  <script>
+    // ===== State =====
+    const state = {
+      gridSize: 7,
+      pace: 2,
+      weave: 0.5,               // chance that a slot is a crossing rather than a mirror
+      symmetry: 'rotational',   // 'rotational' | 'mirrored'
+      showMirrors: false,
+      lineColor: '--theme-line',  // follows the theme until a swatch is picked
+      theme: 'dusk',
+      mode: 'kolam',            // 'kolam' | 'rangoli'
+      folds: 12,                // rangoli symmetry: 8 or 12
+      lang: 'en-IN',            // speech recognition: 'en-IN' | 'ta-IN'
+      panelOpen: true,
+      listening: false,
+    };
+
+    const $ = (id) => document.getElementById(id);
+    const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Registered colour properties compute to "rgb(r, g, b)"; plain ones stay as hex
+    const colorToRgb = (value) => {
+      if (value.startsWith('#')) {
+        const v = parseInt(value.slice(1), 16);
+        return [(v >> 16) & 255, (v >> 8) & 255, v & 255];
+      }
+      const [r, g, b] = value.match(/[\d.]+/g).map(Number);
+      return [r, g, b];
+    };
+
+    // ===== Easing =====
+    const clamp01 = (t) => Math.min(1, Math.max(0, t));
+    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+    // Ease-out with a gentle overshoot: the dots' scale bump
+    const easeOutBack = (t, s = 1.4) => 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2);
+    const easeInOutSine = (t) => -(Math.cos(Math.PI * t) - 1) / 2;
+    const lerp = (p, q, t) => [p[0] + (q[0] - p[0]) * t, p[1] + (q[1] - p[1]) * t];
+    const rgba = ([R, G, B], a) => `rgba(${R}, ${G}, ${B}, ${a})`;
+
+    // ===== Canvas =====
+    const canvas = $('kolam');
+    let ctx = canvas.getContext('2d');   // swapped briefly to render stills (export, thumbnails)
+    let size = 0;   // canvas side in CSS pixels
+    let dpr = 1;
+    let frame = 0;
+
+    // ===== Pulli grid geometry =====
+    // n × n dots, evenly spaced, with a one-gap margin so kolam loops have room around the outer dots.
+    function gridLayout(n) {
+      const gap = size / (n + 1);
+      const radius = Math.min(4.5, Math.max(2.2, gap * 0.055));
+      return { gap, radius, origin: gap };
+    }
+
+    // ===== Grid transitions =====
+    const POP_MS = 520;     // each dot's pop-in
+    const RIPPLE_MS = 420;  // delay spread from centre to corners
+    const FADE_MS = 320;    // old grid fade-out
+
+    let grid = null;        // the grid on screen
+    let leaving = [];       // previous grids still fading out
+
+    function makeGrid(n, start) {
+      const mid = (n - 1) / 2;
+      const maxDist = Math.hypot(mid, mid) || 1;
+      const dots = [];
+      for (let r = 0; r < n; r++) {
+        for (let c = 0; c < n; c++) {
+          dots.push({ r, c, delay: (Math.hypot(r - mid, c - mid) / maxDist) * RIPPLE_MS });
+        }
+      }
+      return { n, dots, start };
+    }
+
+    // Opacity and scale of an arriving dot at time `now`
+    function arrival(dot, start, now) {
+      const t = clamp01((now - start - dot.delay) / POP_MS);
+      return { alpha: easeOutCubic(clamp01(t * 1.8)), scale: t === 0 ? 0 : easeOutBack(t) };
+    }
+
+    function setGrid(n, { animate = !reducedMotion } = {}) {
+      const now = performance.now();
+      if (grid && animate) leaving.push({ ...grid, leftAt: now });
+      if (!animate) leaving = [];
+      // New dots start popping in while the old ones are mid-fade
+      grid = makeGrid(n, animate ? now + (grid ? FADE_MS * 0.4 : 0) : -Infinity);
+      requestRender();
+    }
+
+    // ===== Kolam generator: Gerdes mirror curves =====
+    // Doubled coordinates on a (2n+1)² lattice: dots sit at (odd, odd); mirror slots sit between
+    // neighbouring dots at (x + y odd). The line steps diagonally slot to slot and never crosses a dot.
+    const NONE = 0, H = 1, V = 2;          // slot states: crossing, horizontal mirror, vertical mirror
+    const swapHV = (s) => (s === H ? V : s === V ? H : s);
+
+    // Seeded PRNG so any kolam can be reproduced from its number
+    function mulberry32(seed) {
+      return () => {
+        seed = (seed + 0x6d2b79f5) | 0;
+        let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+
+    // Symmetry transforms as [map, swapsHV]. A 90° turn turns H mirrors into V mirrors.
+    const IDENTITY = [(x, y, N) => [x, y], false];
+    const ROT90    = [(x, y, N) => [N - y, x], true];
+    const ROT180   = [(x, y, N) => [N - x, N - y], false];
+    const ROT270   = [(x, y, N) => [y, N - x], true];
+    const FLIP_X   = [(x, y, N) => [N - x, y], false];
+    const FLIP_Y   = [(x, y, N) => [x, N - y], false];
+
+    // Only groups that can yield a single loop. In testing, any diagonal reflection (and so full
+    // 8-fold symmetry) always splits the line, and on even grids any 180° symmetry always leaves
+    // an even number of loops, so even grids fall back to a single left-right mirror.
+    const SYMMETRIES = {
+      rotational: [IDENTITY, ROT90, ROT180, ROT270],   // 4-fold rotation, the classic sikku
+      mirrored:   [IDENTITY, FLIP_X, FLIP_Y, ROT180],  // reflected across both axes
+      mirror:     [IDENTITY, FLIP_X],                  // left-right mirror only
+    };
+    const FALLBACK = { rotational: 'mirror', mirrored: 'mirror', mirror: null };
+    const SYMMETRY_NAMES = { rotational: '4-fold rotation', mirrored: 'mirrored', mirror: 'mirrored left to right' };
+    const canHaveSymmetry = (n, sym) => sym === 'mirror' || n % 2 === 1;
+
+    // Group the inner slots into orbits that must share a (possibly H/V-swapped) state
+    function buildOrbits(n, symmetry) {
+      const N = 2 * n, W = N + 1;
+      const seen = new Uint8Array(W * W);
+      const orbits = [];
+      for (let y = 1; y < N; y++) {
+        for (let x = 1; x < N; x++) {
+          if ((x + y) % 2 === 0 || seen[y * W + x]) continue;
+          const orbit = [];
+          for (const [map, swap] of SYMMETRIES[symmetry]) {
+            const [mx, my] = map(x, y, N);
+            const i = my * W + mx;
+            if (seen[i]) continue;
+            seen[i] = 1;
+            orbit.push({ i, swap });
+          }
+          orbits.push(orbit);
+        }
+      }
+      return orbits;
+    }
+
+    function buildMirrors(n, orbits, states) {
+      const N = 2 * n, W = N + 1;
+      const mirrors = new Uint8Array(W * W);
+      // The frame always reflects the line back inward
+      for (let k = 1; k < N; k += 2) {
+        mirrors[k] = H;               // top    (x = k, y = 0)
+        mirrors[N * W + k] = H;       // bottom (x = k, y = N)
+        mirrors[k * W] = V;           // left   (x = 0, y = k)
+        mirrors[k * W + N] = V;       // right  (x = N, y = k)
+      }
+      orbits.forEach((orbit, o) => {
+        for (const { i, swap } of orbit) mirrors[i] = swap ? swapHV(states[o]) : states[o];
+      });
+      return mirrors;
+    }
+
+    // Follow the line from one slot until it returns to the same slot and direction
+    function traceLoop(n, mirrors, visited, x0, y0, dx0, dy0) {
+      const W = 2 * n + 1, SW = 4 * n + 1;
+      const points = [];
+      let x = x0, y = y0, dx = dx0, dy = dy0;
+      do {
+        points.push([x, y]);
+        visited[(2 * y + dy) * SW + (2 * x + dx)] = 1;   // mark the segment by its doubled midpoint
+        x += dx;
+        y += dy;
+        const m = mirrors[y * W + x];
+        if (m === H) dy = -dy;
+        else if (m === V) dx = -dx;
+      } while (x !== x0 || y !== y0 || dx !== dx0 || dy !== dy0);
+      return points;
+    }
+
+    // Every diagonal segment belongs to exactly one loop; count how many loops there are
+    function findLoops(n, mirrors, stopAfter = Infinity) {
+      const N = 2 * n, SW = 4 * n + 1;
+      const visited = new Uint8Array(SW * SW);
+      const loops = [];
+      for (let y = 0; y <= N; y++) {
+        for (let x = (y + 1) % 2; x <= N; x += 2) {
+          for (const [dx, dy] of [[1, 1], [1, -1], [-1, 1], [-1, -1]]) {
+            const nx = x + dx, ny = y + dy;
+            if (nx < 0 || ny < 0 || nx > N || ny > N) continue;
+            if (visited[(2 * y + dy) * SW + (2 * x + dx)]) continue;
+            loops.push(traceLoop(n, mirrors, visited, x, y, dx, dy));
+            if (loops.length >= stopAfter) return loops;
+          }
+        }
+      }
+      return loops;
+    }
+
+    function randomState(rng, weave) {
+      if (rng() < weave) return NONE;
+      return rng() < 0.5 ? H : V;
+    }
+
+    // Try random symmetric mirror layouts until one gives a single closed loop.
+    // If chance alone is slow, hill-climb from the best attempt; as a last resort, relax the symmetry.
+    function generateKolam(n, { symmetry = 'rotational', weave = 0.5, seed = 1 } = {}) {
+      const rng = mulberry32(seed);
+      for (let sym = symmetry; sym; sym = FALLBACK[sym]) {
+        if (!canHaveSymmetry(n, sym)) continue;
+        const orbits = buildOrbits(n, sym);
+        let best = null;
+
+        for (let attempt = 0; attempt < 600; attempt++) {
+          const states = orbits.map(() => randomState(rng, weave));
+          const mirrors = buildMirrors(n, orbits, states);
+          const count = findLoops(n, mirrors).length;
+          if (count === 1) return finish(n, mirrors, sym, seed);
+          if (!best || count < best.count) best = { states, count };
+        }
+
+        // Repair: change one orbit at a time, keeping changes that don't add loops
+        const { states } = best;
+        let count = best.count;
+        for (let pass = 0; pass < 40 && count > 1; pass++) {
+          const order = orbits.map((_, i) => i).sort(() => rng() - 0.5);
+          for (const o of order) {
+            const before = states[o];
+            const options = [NONE, H, V].filter((s) => s !== before);
+            states[o] = options[rng() < 0.5 ? 0 : 1];
+            const c = findLoops(n, buildMirrors(n, orbits, states)).length;
+            if (c <= count) count = c;
+            else states[o] = before;
+            if (count === 1) return finish(n, buildMirrors(n, orbits, states), sym, seed);
+          }
+        }
+      }
+      return null;
+    }
+
+    function finish(n, mirrors, symmetry, seed) {
+      let points = findLoops(n, mirrors, 1)[0];
+      // Begin at the top centre so the drawing opens with a deliberate first stroke
+      let start = 0;
+      points.forEach(([x, y], i) => {
+        const [bx, by] = points[start];
+        if (y < by || (y === by && Math.abs(x - n) < Math.abs(bx - n))) start = i;
+      });
+      points = points.slice(start).concat(points.slice(0, start));
+      return { n, mirrors, points, symmetry, seed };
+    }
+
+    // ===== Kolam path =====
+    // Each piece runs from one segment midpoint to the next, bending at the slot between them.
+    // At a crossing that's a straight line; at a mirror it's a quarter circle, which is centred
+    // on the dot whenever the line wraps around one. The curve stays smooth with no corners.
+    const ARC_K = 0.5523;                          // cubic handle length for a circular quarter arc
+    const STRAIGHT_LEN = Math.SQRT2;               // in lattice units (half a dot gap)
+    const ARC_LEN = (Math.PI / 2) * Math.SQRT1_2;
+
+    function buildPieces(points) {
+      const L = points.length;
+      return points.map((p, i) => {
+        const prev = points[(i - 1 + L) % L];
+        const next = points[(i + 1) % L];
+        const a = lerp(prev, p, 0.5);
+        const b = lerp(p, next, 0.5);
+        const straight = next[0] - p[0] === p[0] - prev[0] && next[1] - p[1] === p[1] - prev[1];
+        return straight
+          ? { a, c1: lerp(a, b, 1 / 3), c2: lerp(a, b, 2 / 3), b, len: STRAIGHT_LEN }
+          : { a, c1: lerp(a, p, ARC_K), c2: lerp(b, p, ARC_K), b, len: ARC_LEN };
+      });
+    }
+
+    // Point and unit tangent on a piece at parameter t
+    function pointOnPiece({ a, c1, c2, b }, t) {
+      const u = 1 - t;
+      const x = u * u * u * a[0] + 3 * u * u * t * c1[0] + 3 * u * t * t * c2[0] + t * t * t * b[0];
+      const y = u * u * u * a[1] + 3 * u * u * t * c1[1] + 3 * u * t * t * c2[1] + t * t * t * b[1];
+      const tx = 3 * u * u * (c1[0] - a[0]) + 6 * u * t * (c2[0] - c1[0]) + 3 * t * t * (b[0] - c2[0]);
+      const ty = 3 * u * u * (c1[1] - a[1]) + 6 * u * t * (c2[1] - c1[1]) + 3 * t * t * (b[1] - c2[1]);
+      const l = Math.hypot(tx, ty) || 1;
+      return { x, y, tx: tx / l, ty: ty / l };
+    }
+
+    // Hand-poured thickness: a few slow waves, each periodic over the loop so the ends meet cleanly
+    function makeThickness(total, seed) {
+      const rng = mulberry32(seed * 7 + 3);
+      const waves = [[0.11, 5.5], [0.06, 1.9], [0.035, 0.8]].map(([amp, wavelength]) => ({
+        amp,
+        k: (2 * Math.PI * Math.max(1, Math.round(total / wavelength))) / total,
+        phase: rng() * Math.PI * 2,
+      }));
+      return (s) => waves.reduce((w, { amp, k, phase }) => w + amp * Math.sin(k * s + phase), 1);
+    }
+
+    const SAMPLES = 8;   // ribbon samples per piece
+
+    function sampleLoop(pieces, thickness) {
+      const samples = [];
+      for (const pc of pieces) {
+        for (let j = 0; j < SAMPLES; j++) {
+          const t = j / SAMPLES;
+          const p = pointOnPiece(pc, t);
+          p.s = pc.s0 + pc.len * t;
+          p.w = thickness(p.s);
+          samples.push(p);
+        }
+      }
+      return samples;
+    }
+
+    // One closed ribbon sub-path along the points. Every ribbon winds the same way (counterclockwise
+    // on screen), so the default nonzero fill keeps crossings and overlaps solid.
+    function addRibbon(pts, halfWidth, taper) {
+      if (pts.length < 2) return;
+      const edge = (p, sign) => {
+        const h = sign * halfWidth * p.w * taper(p.s);
+        return [p.x - p.ty * h, p.y + p.tx * h];
+      };
+      ctx.moveTo(...edge(pts[0], 1));
+      for (let j = 1; j < pts.length; j++) ctx.lineTo(...edge(pts[j], 1));
+      for (let j = pts.length - 1; j >= 0; j--) ctx.lineTo(...edge(pts[j], -1));
+      ctx.closePath();
+    }
+
+    function addCap(p, r) {
+      ctx.moveTo(p.x + r, p.y);
+      ctx.arc(p.x, p.y, r, Math.PI * 2, 0, true);   // counterclockwise, matching the ribbons
+    }
+
+    const HEAD_TAPER = 0.9;   // lattice units over which the pouring end narrows
+
+    // Path the first `upTo` units of the loop as a variable-width ribbon; returns the pen tip
+    function pathRibbon(k, upTo, halfWidth) {
+      const { pieces, samples, total } = k;
+      const complete = upTo >= total;
+      const taper = complete ? () => 1 : (s) => 0.5 + 0.5 * clamp01((upTo - s) / HEAD_TAPER);
+      let tip = null;
+      ctx.beginPath();
+      for (let i = 0; i < pieces.length; i++) {
+        const pc = pieces[i];
+        if (pc.s0 >= upTo) break;
+        let pts = samples.slice(i * SAMPLES, (i + 1) * SAMPLES);
+        if (pc.s0 + pc.len <= upTo) {
+          const next = samples[((i + 1) * SAMPLES) % samples.length];
+          pts.push({ ...next, s: pc.s0 + pc.len });
+        } else {
+          tip = { ...pointOnPiece(pc, (upTo - pc.s0) / pc.len), s: upTo, w: k.thickness(upTo) };
+          pts = pts.filter((p) => p.s < upTo);
+          pts.push(tip);
+        }
+        addRibbon(pts, halfWidth, taper);
+      }
+      if (!complete) {
+        addCap(samples[0], halfWidth * samples[0].w);
+        if (tip) addCap(tip, halfWidth * tip.w * 0.5);
+      }
+      return tip;
+    }
+
+    // ===== Kolam drawing =====
+    const DRAW_MS = [9000, 6000, 4200];   // Slow, Calm, Brisk
+    const SHIMMER_MS = 1600;
+    const KOLAM_FADE_MS = 450;
+    const easeOutQuad = (t) => 1 - (1 - t) * (1 - t);
+
+    let kolam = null;               // the kolam being drawn or on show
+    let fadingKolams = [];          // cleared kolams fading out
+
+    const randomSeed = () => 10000 + Math.floor(Math.random() * 90000);
+
+    // ===== Never repeat a design =====
+    // A fingerprint identifies the design itself (the kolam's mirror layout, or the rangoli's
+    // seed and folds), so two seeds that happen to give the same kolam still count as a repeat.
+    const seenDesigns = new Set();
+
+    function hashString(s) {
+      let h = 2166136261;
+      for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
+      return (h >>> 0).toString(36);
+    }
+    const kolamFingerprint = (k) => `k${k.n}:${hashString(k.mirrors.join(''))}`;
+    const rangoliFingerprint = (folds, seed) => `r${folds}:${seed}`;
+    const isRepeat = (fp) => seenDesigns.has(fp) || gallery.some((g) => g.fp === fp);
+
+    // Generate a kolam and prepare everything needed to draw it
+    function buildKolam(n, { symmetry, weave, seed }) {
+      const k = generateKolam(n, { symmetry, weave, seed });
+      if (!k) return null;
+      const pieces = buildPieces(k.points);
+      let total = 0;
+      for (const pc of pieces) {
+        pc.s0 = total;
+        total += pc.len;
+      }
+      const thickness = makeThickness(total, seed);
+      const samples = sampleLoop(pieces, thickness);
+      return { ...k, pieces, samples, thickness, total, fp: kolamFingerprint(k), weave, requestedSymmetry: symmetry };
+    }
+
+    // With no seed, keep drawing seeds until the design is new to this session and the gallery.
+    // Small grids have few single-loop designs, so after enough tries accept a repeat.
+    function drawKolam({ seed, delay = 0 } = {}) {
+      const opts = { symmetry: state.symmetry, weave: state.weave };
+      let k = null;
+      if (seed !== undefined) {
+        k = buildKolam(state.gridSize, { ...opts, seed });
+      } else {
+        for (let i = 0; i < 40; i++) {
+          const candidate = buildKolam(state.gridSize, { ...opts, seed: randomSeed() });
+          if (!candidate) continue;
+          k = candidate;
+          if (!isRepeat(candidate.fp)) break;
+        }
+      }
+      clearKolam();
+      if (!k) return;
+      seenDesigns.add(k.fp);
+      const duration = reducedMotion ? 0 : DRAW_MS[state.pace - 1];
+      kolam = { ...k, start: performance.now() + delay, duration };
+      lastTip = null;
+      updateCaption();
+      renderGallery();
+      requestRender();
+    }
+
+    function clearKolam() {
+      if (kolam && !reducedMotion) fadingKolams.push({ k: kolam, leftAt: performance.now() });
+      kolam = null;
+      updateCaption();
+      requestRender();
+    }
+
+    const drawProgress = (k, at) => (k.duration ? clamp01((at - k.start) / k.duration) : 1);
+    const lineWidthFor = (gap) => Math.min(4.2, Math.max(1.8, gap * 0.055));
+
+    // Draws the line as far as it has got; returns the pen tip in CSS pixels while drawing
+    function drawKolamLine(k, alpha, at) {
+      const t = drawProgress(k, at);
+      if (t <= 0 || alpha <= 0) return null;
+      const { gap } = gridLayout(k.n);
+      const s = gap / 2;                       // one lattice unit in CSS pixels
+      const rgb = colorToRgb(css(state.lineColor));
+
+      ctx.save();
+      ctx.setTransform(dpr * s, 0, 0, dpr * s, dpr * s, dpr * s);   // lattice coords → device pixels
+      const tip = pathRibbon(k, t >= 1 ? Infinity : easeOutQuad(t) * k.total, lineWidthFor(gap) / s / 2);
+      ctx.fillStyle = rgba(rgb, 0.94 * alpha);
+      ctx.shadowColor = rgba(rgb, Math.min(0.85, (0.5 * lineGlow) / 14) * alpha);
+      ctx.shadowBlur = lineGlow * dpr;         // shadows ignore the transform, so scale by hand
+      ctx.fill();
+      ctx.restore();
+
+      if (!tip) return null;
+      // The lamp eases in at the first stroke and dims as the loop closes
+      const glow = Math.min(clamp01(t / 0.03), clamp01((1 - t) / 0.06));
+      return { x: (tip.x + 1) * s, y: (tip.y + 1) * s, tx: tip.tx, ty: tip.ty, glow };
+    }
+
+    // Once the loop closes, a band of warm light sweeps across it once, corner to corner
+    function drawShimmer(k, now) {
+      const t = (now - k.start - k.duration) / SHIMMER_MS;
+      if (t <= 0 || t >= 1) return;
+      const N = 2 * k.n;
+      const { gap } = gridLayout(k.n);
+      const s = gap / 2;
+      const band = N * 0.35;                                  // in units of x + y
+      const c = -band + (2 * N + 2 * band) * easeInOutSine(t);
+
+      ctx.save();
+      ctx.setTransform(dpr * s, 0, 0, dpr * s, dpr * s, dpr * s);
+      pathRibbon(k, Infinity, (lineWidthFor(gap) / s / 2) * 1.15);
+      const g = ctx.createLinearGradient((c - band) / 2, (c - band) / 2, (c + band) / 2, (c + band) / 2);
+      g.addColorStop(0, 'rgba(255, 244, 214, 0)');
+      g.addColorStop(0.5, 'rgba(255, 244, 214, 0.85)');
+      g.addColorStop(1, 'rgba(255, 244, 214, 0)');
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.fillStyle = g;
+      ctx.shadowColor = rgba(colorToRgb(css('--flame')), 0.9 * Math.sin(Math.PI * t));
+      ctx.shadowBlur = 16 * dpr;
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // ===== Brass lamp and rice-flour dust =====
+    const MAX_DUST = 520;
+    let dust = [];
+    let lastTip = null;
+
+    // Shed tiny grains along the path the tip covered this frame, so the trail stays continuous
+    function emitDust(tip, dt) {
+      // A jump (a rangoli moving on to its next ring) starts a new trail instead of a streak
+      if (lastTip && Math.hypot(tip.x - lastTip.x, tip.y - lastTip.y) > 40) lastTip = null;
+      const from = lastTip || tip;
+      const dist = Math.hypot(tip.x - from.x, tip.y - from.y);
+      const count = Math.min(10, 1 + Math.floor(dist / 2.5));
+      for (let i = 0; i < count && dust.length < MAX_DUST; i++) {
+        const f = Math.random();
+        const back = 4 + Math.random() * 12;                 // drift gently behind the tip
+        dust.push({
+          x: from.x + (tip.x - from.x) * f + (Math.random() - 0.5) * 3,
+          y: from.y + (tip.y - from.y) * f + (Math.random() - 0.5) * 3,
+          vx: -tip.tx * back + (Math.random() - 0.5) * 16,
+          vy: -tip.ty * back + (Math.random() - 0.5) * 16 - 6, // a faint rise, like warm air
+          age: 0,
+          life: 700 + Math.random() * 800,
+          size: 0.5 + Math.random() * 1.1,
+          glow: tip.glow,
+          col: tip.col,                                       // rangoli powder carries its ring colour
+        });
+      }
+      lastTip = tip;
+    }
+
+    function drawDust(dt) {
+      const brass = colorToRgb(css('--flame'));
+      const flour = colorToRgb(css('--rice-flour'));
+      const drag = Math.pow(0.35, dt / 1000);
+      ctx.save();
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.globalCompositeOperation = 'lighter';
+      dust = dust.filter((p) => {
+        p.age += dt;
+        const a = p.age / p.life;
+        if (a >= 1) return false;
+        p.vx *= drag;
+        p.vy *= drag;
+        p.x += (p.vx * dt) / 1000;
+        p.y += (p.vy * dt) / 1000;
+        // Embers start warm brass and cool to rice-flour white as they fade
+        const warm = clamp01(1 - a * 2.5);
+        const base = p.col || flour;
+        const col = base.map((v, i) => Math.round(v + (brass[i] - v) * warm));
+        ctx.fillStyle = rgba(col, Math.pow(1 - a, 1.6) * 0.85 * p.glow);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * (1 - a * 0.4), 0, Math.PI * 2);
+        ctx.fill();
+        return true;
+      });
+      ctx.restore();
+    }
+
+    // A small brass lamp flame at the pen tip, flickering softly
+    function drawLamp(tip, now) {
+      if (tip.glow <= 0) return;
+      const brass = colorToRgb(css('--flame'));
+      const flicker = 1 + 0.07 * Math.sin(now * 0.021) + 0.05 * Math.sin(now * 0.047 + 1.3);
+      const r = 24 * flicker;
+      ctx.save();
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.globalCompositeOperation = 'lighter';
+      const halo = ctx.createRadialGradient(tip.x, tip.y, 0, tip.x, tip.y, r);
+      halo.addColorStop(0, `rgba(255, 238, 196, ${0.95 * tip.glow})`);
+      halo.addColorStop(0.16, rgba(brass, 0.7 * tip.glow));
+      halo.addColorStop(0.45, rgba(brass, 0.22 * tip.glow));
+      halo.addColorStop(1, rgba(brass, 0));
+      ctx.fillStyle = halo;
+      ctx.beginPath();
+      ctx.arc(tip.x, tip.y, r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = `rgba(255, 250, 236, ${0.95 * tip.glow})`;
+      ctx.beginPath();
+      ctx.arc(tip.x, tip.y, 2.8 * flicker, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // Brass marks showing where the mirrors sit (the frame's mirrors are left implicit)
+    function drawMirrors(k, alpha) {
+      if (alpha <= 0) return;
+      const N = 2 * k.n, W = N + 1;
+      const { gap } = gridLayout(k.n);
+      const s = gap / 2;
+      const half = 0.42;                       // mark half-length, in lattice units
+      ctx.save();
+      ctx.setTransform(dpr * s, 0, 0, dpr * s, dpr * s, dpr * s);
+      ctx.beginPath();
+      for (let y = 1; y < N; y++) {
+        for (let x = 1; x < N; x++) {
+          const m = k.mirrors[y * W + x];
+          if (m === H) { ctx.moveTo(x - half, y); ctx.lineTo(x + half, y); }
+          else if (m === V) { ctx.moveTo(x, y - half); ctx.lineTo(x, y + half); }
+        }
+      }
+      ctx.lineCap = 'round';
+      ctx.lineWidth = 1.5 / s;
+      ctx.strokeStyle = rgba(colorToRgb(css('--accent')), 0.55 * alpha);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // ===== Festival themes =====
+    // Colours live in CSS (see :root[data-theme]); this holds what the canvas does differently.
+    // Rangoli colours per theme: `palette` fills the rings, `outline` is the rice-flour border
+    // between rings, `diya` is the lamp flame colour.
+    const THEMES = {
+      dusk: {
+        name: 'Courtyard at Dusk', glow: 14,
+        palette: ['#c9a24c', '#ba322a', '#e2a73a', '#2f6b66', '#7a3b6e', '#f5efe3'],
+        outline: '#f5efe3', diya: '#f1b84a',
+      },
+      pongal: {
+        name: 'Pongal', glow: 12,
+        palette: ['#f4bb3a', '#8fb862', '#d9542b', '#fbeedc', '#5c7f3a', '#e98a2e'],
+        outline: '#fbeedc', diya: '#ffcf4a',
+      },
+      diwali: {
+        name: 'Diwali', glow: 16, sparkles: true,
+        palette: ['#e9b949', '#c2397a', '#7b4fd0', '#e8743b', '#3fa7a0', '#f6ead2'],
+        outline: '#f6ead2', diya: '#ffc85a',
+      },
+      deepam: {
+        name: 'Karthigai Deepam', glow: 26, lamps: true,
+        palette: ['#ff8a2a', '#ffc04d', '#c4421b', '#8a2a12', '#ffd98a', '#f7e4cc'],
+        outline: '#f7e4cc', diya: '#ffb347',
+      },
+      margazhi: {
+        name: 'Margazhi', glow: 9,
+        palette: ['#fbf8f1', '#d9c4a3', '#b9864f', '#8c5a3c', '#e8d9bd', '#c39a6b'],
+        outline: '#fbf8f1', diya: '#f0c46e',
+      },
+    };
+    const THEME_MS = 800;
+    let themeChangedAt = -Infinity;
+    let lineGlow = THEMES.dusk.glow;           // eased toward the theme's glow
+    const fx = { sparkles: 0, lamps: 0 };      // effect strengths, faded with the theme
+    let sparkles = [];
+
+    // Diwali: an occasional four-point twinkle somewhere over the courtyard
+    function drawSparkles(now, dt) {
+      if (fx.sparkles > 0 && !reducedMotion && Math.random() < (dt / 420) * fx.sparkles) {
+        const m = size * 0.04;
+        sparkles.push({
+          x: m + Math.random() * (size - 2 * m),
+          y: m + Math.random() * (size - 2 * m),
+          born: now,
+          life: 900 + Math.random() * 700,
+          r: 4 + Math.random() * 6,
+        });
+      }
+      const flame = colorToRgb(css('--flame'));
+      ctx.save();
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.globalCompositeOperation = 'lighter';
+      sparkles = sparkles.filter((sp) => {
+        const t = (now - sp.born) / sp.life;
+        if (t >= 1) return false;
+        const k = Math.sin(Math.PI * t) * fx.sparkles;   // swell and fade
+        const r = sp.r * (0.6 + 0.4 * k);
+        const halo = ctx.createRadialGradient(sp.x, sp.y, 0, sp.x, sp.y, r * 2.2);
+        halo.addColorStop(0, rgba(flame, 0.5 * k));
+        halo.addColorStop(1, rgba(flame, 0));
+        ctx.fillStyle = halo;
+        ctx.beginPath();
+        ctx.arc(sp.x, sp.y, r * 2.2, 0, Math.PI * 2);
+        ctx.fill();
+        // Two slim crossed diamonds make the star
+        ctx.fillStyle = `rgba(255, 246, 222, ${0.9 * k})`;
+        ctx.beginPath();
+        for (const [ax, ay] of [[r, 0.16 * r], [0.16 * r, r]]) {
+          ctx.moveTo(sp.x - ax, sp.y);
+          ctx.lineTo(sp.x, sp.y - ay);
+          ctx.lineTo(sp.x + ax, sp.y);
+          ctx.lineTo(sp.x, sp.y + ay);
+          ctx.closePath();
+        }
+        ctx.fill();
+        return true;
+      });
+      ctx.restore();
+    }
+
+    // Karthigai Deepam: a small clay diya flickering at each corner of the grid
+    function drawCornerLamps(now, n = grid ? grid.n : 0) {
+      if (fx.lamps <= 0 || !n) return;
+      const { gap } = gridLayout(n);
+      const s = gap / 2;
+      const k = Math.min(4, Math.max(2.2, gap * 0.07));
+      const flame = colorToRgb(css('--flame'));
+      const corners = [[s, s], [size - s, s], [s, size - s], [size - s, size - s]];
+      ctx.save();
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      corners.forEach(([x, y], i) => {
+        const flicker = reducedMotion ? 1 : 1 + 0.1 * Math.sin(now * 0.021 + i * 1.7) + 0.05 * Math.sin(now * 0.057 + i);
+        const sway = reducedMotion ? 0 : Math.sin(now * 0.013 + i * 2.3) * k * 0.35;
+        const h = 4.2 * k * flicker;
+        const a = fx.lamps;
+
+        // Warm light pooling around the lamp
+        ctx.globalCompositeOperation = 'lighter';
+        const halo = ctx.createRadialGradient(x, y - h * 0.4, 0, x, y - h * 0.4, h * 4);
+        halo.addColorStop(0, rgba(flame, 0.38 * a * flicker));
+        halo.addColorStop(1, rgba(flame, 0));
+        ctx.fillStyle = halo;
+        ctx.beginPath();
+        ctx.arc(x, y - h * 0.4, h * 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Clay bowl
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = `rgba(92, 46, 22, ${0.95 * a})`;
+        ctx.beginPath();
+        ctx.ellipse(x, y + k * 0.9, k * 2.2, k * 1.1, 0, 0, Math.PI);
+        ctx.fill();
+        ctx.strokeStyle = rgba(flame, 0.55 * a);
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.ellipse(x, y + k * 0.9, k * 2.2, k * 0.45, 0, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Teardrop flame, leaning with the breeze
+        ctx.globalCompositeOperation = 'lighter';
+        const tipX = x + sway, tipY = y - h;
+        const body = ctx.createRadialGradient(x, y - h * 0.3, 0, x, y - h * 0.3, h * 0.8);
+        body.addColorStop(0, `rgba(255, 248, 220, ${a})`);
+        body.addColorStop(0.45, rgba(flame, 0.95 * a));
+        body.addColorStop(1, rgba(flame, 0));
+        ctx.fillStyle = body;
+        ctx.beginPath();
+        ctx.moveTo(tipX, tipY);
+        ctx.quadraticCurveTo(x + k * 1.1, y - h * 0.35, x, y + k * 0.3);
+        ctx.quadraticCurveTo(x - k * 1.1, y - h * 0.35, tipX, tipY);
+        ctx.fill();
+      });
+      ctx.restore();
+    }
+
+    // ===== Rangoli =====
+    // A radially symmetric, fully filled powder design: a centre flower, then concentric rings of
+    // lotus petals, teardrops, dots and diyas, each on its own coloured band. The design is pure
+    // data (unit radii and palette slots), so a new theme recolours it and export can re-render
+    // it at any resolution.
+    const RANGOLI_RADIUS = 0.46;           // of the canvas side
+    const RANGOLI_FADE_MS = 450;
+    const RING_MOTIFS = ['petals', 'teardrops', 'dots', 'diyas'];
+
+    let rangoli = null;                    // the rangoli being poured or on show
+    let fadingRangolis = [];
+    let rebuildTimer = 0;
+
+    function generateRangoli(seed, folds) {
+      const rng = mulberry32(seed * 31 + folds);
+      const ringCount = 5 + Math.floor(rng() * 3);           // 5–7 rings around the centre
+      const CENTRE = 0.15;
+      const widths = Array.from({ length: ringCount }, () => 0.75 + rng() * 0.5);
+      const unit = (1 - CENTRE) / widths.reduce((a, b) => a + b, 0);
+
+      // Three distinct palette slots per ring (band, motif, detail); neighbouring bands differ
+      const PALETTE_SIZE = 6;
+      const slot = (...avoid) => {
+        let s;
+        do s = Math.floor(rng() * PALETTE_SIZE); while (avoid.includes(s));
+        return s;
+      };
+      const colours = (prevBand) => {
+        const band = slot(prevBand);
+        const motif = slot(band);
+        return { band, motif, detail: slot(band, motif) };
+      };
+
+      const rings = [{ type: 'centre', r0: 0, r1: CENTRE, count: folds, offset: 0, ...colours(-1) }];
+      let r = CENTRE;
+      widths.forEach((w, i) => {
+        const prevType = rings[rings.length - 1].type;
+        let type;
+        if (i === 0) type = 'petals';
+        else if (i === ringCount - 1) type = rng() < 0.5 ? 'scallops' : 'petals';
+        else do type = RING_MOTIFS[Math.floor(rng() * RING_MOTIFS.length)]; while (type === prevType);
+        const doubled = type === 'dots' || type === 'scallops' || (type !== 'diyas' && i > 1 && rng() < 0.5);
+        rings.push({
+          type,
+          r0: r,
+          r1: r + w * unit,
+          count: folds * (doubled ? 2 : 1),
+          offset: i % 2 ? 0.5 : 0,                            // alternate rings sit half a step round
+          inward: type === 'teardrops' && rng() < 0.4,
+          ...colours(rings[rings.length - 1].band),
+        });
+        r += w * unit;
+      });
+
+      // Every rangoli gets a ring of diyas somewhere in the middle
+      if (!rings.some((ring) => ring.type === 'diyas')) {
+        const ring = rings[2 + Math.floor(rng() * (ringCount - 2))];
+        ring.type = 'diyas';
+        ring.count = folds;
+      }
+      return { seed, folds, rings, fp: rangoliFingerprint(folds, seed) };
+    }
+
+    // --- Shapes ---
+    const polar = (c, a, r) => [c + Math.cos(a) * r, c + Math.sin(a) * r];
+    const PETAL = (t) => Math.pow(Math.sin(Math.PI * t), 0.8) * (1 - 0.2 * t);
+    const TEARDROP = (t) => (t < 0.38
+      ? Math.sqrt(Math.max(0, 1 - ((0.38 - t) / 0.38) ** 2))
+      : Math.pow((1 - t) / 0.62, 1.25));
+
+    // A motif lying along the radius at angle `a`, from r0 to r1, with half-width profile w(t)
+    function radialShape(c, a, r0, r1, halfW, profile, steps = 16) {
+      const ux = Math.cos(a), uy = Math.sin(a);
+      const left = [], right = [];
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps;
+        const r = r0 + (r1 - r0) * t;
+        const w = halfW * profile(t);
+        left.push([c + ux * r - uy * w, c + uy * r + ux * w]);
+        right.push([c + ux * r + uy * w, c + uy * r - ux * w]);
+      }
+      return left.concat(right.reverse());
+    }
+
+    function circlePts(x, y, r, steps = 24) {
+      return Array.from({ length: steps }, (_, i) => {
+        const a = (i / steps) * Math.PI * 2;
+        return [x + Math.cos(a) * r, y + Math.sin(a) * r];
+      });
+    }
+
+    // Powder never lands on a clean line: nudge outline points in and out, smoothed so the edge
+    // wobbles like a hand-poured one rather than looking noisy
+    function roughen(pts, amp, rng) {
+      const n = pts.length;
+      let off = pts.map(() => (rng() - 0.5) * 2 * amp);
+      for (let pass = 0; pass < 2; pass++) {
+        off = off.map((v, i) => (off[(i - 1 + n) % n] + 2 * v + off[(i + 1) % n]) / 4);
+      }
+      let mx = 0, my = 0;
+      for (const [x, y] of pts) { mx += x; my += y; }
+      mx /= n;
+      my /= n;
+      return pts.map(([x, y], i) => {
+        const dx = x - mx, dy = y - my;
+        const l = Math.hypot(dx, dy) || 1;
+        return [x + (dx / l) * off[i], y + (dy / l) * off[i]];
+      });
+    }
+
+    function traceSmooth(g, pts) {
+      const n = pts.length;
+      const mid = (p, q) => [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2];
+      g.moveTo(...mid(pts[n - 1], pts[0]));
+      for (let i = 0; i < n; i++) g.quadraticCurveTo(...pts[i], ...mid(pts[i], pts[(i + 1) % n]));
+      g.closePath();
+    }
+
+    function fillShape(g, pts, colour, amp, rng) {
+      g.beginPath();
+      traceSmooth(g, roughen(pts, amp, rng));
+      g.fillStyle = colour;
+      g.shadowColor = colour;          // a slight blur of the same colour reads as soft powder
+      g.fill();
+    }
+
+    // A coloured band from r0 to r1 (or to a shaped outer edge)
+    function fillBand(g, c, r0, r1, colour, amp, rng, outerAt) {
+      const steps = 180;
+      const outer = [], inner = [];
+      for (let i = 0; i < steps; i++) {
+        const a = (i / steps) * Math.PI * 2;
+        outer.push(polar(c, a, outerAt ? outerAt(a) : r1));
+        inner.push(polar(c, a, r0));
+      }
+      g.beginPath();
+      traceSmooth(g, roughen(outer, amp, rng));
+      if (r0 > 0) traceSmooth(g, roughen(inner, amp, rng).reverse());
+      g.fillStyle = colour;
+      g.shadowColor = colour;
+      g.fill('evenodd');
+    }
+
+    function strokeCircle(g, c, r, colour, width, amp, rng) {
+      g.beginPath();
+      traceSmooth(g, roughen(circlePts(c, c, r, 160), amp, rng));
+      g.lineWidth = width;
+      g.strokeStyle = colour;
+      g.shadowColor = colour;
+      g.stroke();
+    }
+
+    function drawRing(g, ring, c, R, theme, rng) {
+      const r0 = ring.r0 * R, r1 = ring.r1 * R, L = r1 - r0, rm = (r0 + r1) / 2;
+      const step = (Math.PI * 2) / ring.count;
+      const a0 = -Math.PI / 2 + ring.offset * step;
+      const amp = Math.max(0.4, R * 0.004);
+      const band = theme.palette[ring.band];
+      const motif = theme.palette[ring.motif];
+      const detail = theme.palette[ring.detail];
+      const each = (fn) => { for (let k = 0; k < ring.count; k++) fn(a0 + k * step); };
+
+      switch (ring.type) {
+        case 'centre': {
+          fillShape(g, circlePts(c, c, r1, 48), band, amp, rng);
+          const halfW = Math.min(step * r1 * 0.45, r1 * 0.32);
+          each((a) => fillShape(g, radialShape(c, a, r1 * 0.14, r1 * 0.92, halfW, PETAL), motif, amp * 0.5, rng));
+          fillShape(g, circlePts(c, c, r1 * 0.28), detail, amp * 0.4, rng);
+          fillShape(g, circlePts(c, c, r1 * 0.1), theme.outline, amp * 0.3, rng);
+          break;
+        }
+        case 'petals': {
+          fillBand(g, c, r0, r1, band, amp, rng);
+          const halfW = Math.min(step * rm * 0.5, L * 0.55);
+          each((a) => {
+            fillShape(g, radialShape(c, a, r0 + L * 0.06, r1 - L * 0.04, halfW, PETAL), motif, amp * 0.6, rng);
+            fillShape(g, radialShape(c, a, r0 + L * 0.2, r1 - L * 0.32, halfW * 0.45, PETAL), detail, amp * 0.4, rng);
+          });
+          break;
+        }
+        case 'teardrops': {
+          fillBand(g, c, r0, r1, band, amp, rng);
+          const halfW = Math.min(step * rm * 0.36, L * 0.32);
+          const [from, to] = ring.inward ? [r1 - L * 0.1, r0 + L * 0.1] : [r0 + L * 0.1, r1 - L * 0.1];
+          each((a) => {
+            fillShape(g, radialShape(c, a, from, to, halfW, TEARDROP), motif, amp * 0.6, rng);
+            const [x, y] = polar(c, a, from + (to - from) * 0.24);
+            fillShape(g, circlePts(x, y, halfW * 0.42, 16), detail, amp * 0.3, rng);
+            const [sx, sy] = polar(c, a + step / 2, rm);
+            fillShape(g, circlePts(sx, sy, Math.min(L * 0.07, halfW * 0.4), 12), theme.outline, amp * 0.2, rng);
+          });
+          break;
+        }
+        case 'dots': {
+          fillBand(g, c, r0, r1, band, amp, rng);
+          const big = Math.min(L * 0.3, step * rm * 0.32);
+          each((a) => {
+            const [x, y] = polar(c, a, rm);
+            fillShape(g, circlePts(x, y, big), motif, amp * 0.5, rng);
+            fillShape(g, circlePts(x, y, big * 0.45, 16), detail, amp * 0.3, rng);
+            const [sx, sy] = polar(c, a + step / 2, rm);
+            fillShape(g, circlePts(sx, sy, big * 0.34, 14), detail, amp * 0.3, rng);
+          });
+          break;
+        }
+        case 'diyas': {
+          fillBand(g, c, r0, r1, band, amp, rng);
+          const bw = Math.min(step * rm * 0.42, L * 0.48);
+          const bh = L * 0.34;
+          const rim = rm - L * 0.06;
+          each((a) => {
+            const ux = Math.cos(a), uy = Math.sin(a);
+            // Clay bowl: a half ellipse below the rim, opening outward
+            const bowl = [];
+            for (let i = 0; i <= 20; i++) {
+              const th = (i / 20) * Math.PI;
+              const u = rim - Math.sin(th) * bh;
+              const v = Math.cos(th) * bw;
+              bowl.push([c + ux * u - uy * v, c + uy * u + ux * v]);
+            }
+            fillShape(g, bowl, motif, amp * 0.4, rng);
+            // Flame, with a pale core
+            fillShape(g, radialShape(c, a, rim + L * 0.02, rim + L * 0.52, bw * 0.46, TEARDROP), theme.diya, amp * 0.3, rng);
+            fillShape(g, radialShape(c, a, rim + L * 0.06, rim + L * 0.34, bw * 0.22, TEARDROP), '#fff4cf', amp * 0.2, rng);
+            const [sx, sy] = polar(c, a + step / 2, rm);
+            fillShape(g, circlePts(sx, sy, Math.min(L * 0.07, bw * 0.3), 12), detail, amp * 0.2, rng);
+          });
+          break;
+        }
+        case 'scallops': {
+          // Outer border: a band whose edge swells into a bump at every step
+          const outerAt = (a) => r0 + L * (0.42 + 0.58 * Math.pow(Math.abs(Math.cos((ring.count * (a - a0)) / 2)), 0.7));
+          fillBand(g, c, r0, r1, band, amp, rng, outerAt);
+          each((a) => {
+            const [x, y] = polar(c, a, r0 + L * 0.68);
+            fillShape(g, circlePts(x, y, L * 0.13, 16), motif, amp * 0.3, rng);
+            const [sx, sy] = polar(c, a + step / 2, r0 + L * 0.26);
+            fillShape(g, circlePts(sx, sy, L * 0.07, 12), detail, amp * 0.2, rng);
+          });
+          break;
+        }
+      }
+      // A thin rice-flour border between rings, as in real rangoli
+      if (ring.type !== 'scallops') strokeCircle(g, c, r1, theme.outline, Math.max(1, R * 0.006), amp * 0.6, rng);
+    }
+
+    // Grain: fine light and dark specks over the painted powder, plus a few stray grains
+    // that landed just past the ring's edge
+    function powder(g, c, rIn, rOut, scale, colour) {
+      g.save();
+      g.setTransform(1, 0, 0, 1, 0, 0);
+      g.shadowBlur = 0;
+      const C = c * scale, r0 = rIn * scale, r1 = rOut * scale;
+      const area = Math.PI * (r1 * r1 - r0 * r0);
+      const count = Math.min(70000, Math.round(area / 14));
+      const grain = Math.max(1, scale * 0.6);
+      const speckle = (n, style, rFrom, rTo, op) => {
+        g.globalCompositeOperation = op;
+        g.fillStyle = style;
+        g.beginPath();
+        for (let i = 0; i < n; i++) {
+          const a = Math.random() * Math.PI * 2;
+          const r = Math.sqrt(rFrom * rFrom + Math.random() * (rTo * rTo - rFrom * rFrom));
+          g.rect(C + Math.cos(a) * r, C + Math.sin(a) * r, grain, grain);
+        }
+        g.fill();
+      };
+      speckle(count / 2, 'rgba(255, 255, 255, 0.16)', r0, r1, 'source-atop');
+      speckle(count / 2, 'rgba(0, 0, 0, 0.18)', r0, r1, 'source-atop');
+      speckle(Math.round(r1 * 0.6), colour, r1, r1 + 3 * scale, 'source-over');
+      g.restore();
+    }
+
+    // Each ring renders to its own canvas, just big enough for it, so it can be poured separately
+    function buildRangoliLayers(design, sizeCss, scale) {
+      const theme = THEMES[state.theme];
+      const R = sizeCss * RANGOLI_RADIUS;
+      return design.rings.map((ring, i) => {
+        const half = ring.r1 * R + R * 0.05;
+        const px = Math.max(1, Math.ceil(half * 2 * scale));
+        const layer = document.createElement('canvas');
+        layer.width = layer.height = px;
+        const g = layer.getContext('2d');
+        g.setTransform(scale, 0, 0, scale, 0, 0);
+        g.shadowBlur = 1.4 * scale;
+        const rng = mulberry32(design.seed * 977 + i * 131 + 7);
+        drawRing(g, ring, half, R, theme, rng);
+        powder(g, half, ring.r0 * R, ring.r1 * R + 2, scale, theme.palette[ring.band]);
+        return { canvas: layer, half, ring };
+      });
+    }
+
+    function makeRangoliView(design, { start, duration, fadeIn = 0 }) {
+      return {
+        design,
+        layers: buildRangoliLayers(design, size, dpr),
+        builtSize: size,
+        builtKey: `${size}:${dpr}`,
+        start,
+        duration,
+        fadeIn,
+        fadeInAt: performance.now(),
+      };
+    }
+
+    function showRangoli(design, { delay = 0 } = {}) {
+      clearRangoli();
+      seenDesigns.add(design.fp);
+      const duration = reducedMotion ? 0 : DRAW_MS[state.pace - 1];
+      rangoli = makeRangoliView(design, { start: performance.now() + delay, duration });
+      lastTip = null;
+      updateCaption();
+      renderGallery();
+      requestRender();
+    }
+
+    // A fresh seed every time, never a design already seen this session or kept in the gallery
+    function newRangoli(opts) {
+      let design;
+      for (let i = 0; i < 40; i++) {
+        design = generateRangoli(randomSeed(), state.folds);
+        if (!isRepeat(design.fp)) break;
+      }
+      showRangoli(design, opts);
+    }
+
+    function clearRangoli() {
+      if (rangoli && !reducedMotion) fadingRangolis.push({ r: rangoli, leftAt: performance.now(), ms: RANGOLI_FADE_MS });
+      rangoli = null;
+      updateCaption();
+      requestRender();
+    }
+
+    // A theme change recolours the same design: the old colours stay underneath while the new
+    // ones fade in on top, and any ring still being poured carries on
+    function recolourRangoli() {
+      if (!rangoli) return;
+      const old = rangoli;
+      if (!reducedMotion) fadingRangolis.push({ r: old, leftAt: performance.now(), ms: THEME_MS, underneath: true });
+      rangoli = makeRangoliView(old.design, { start: old.start, duration: old.duration, fadeIn: reducedMotion ? 0 : THEME_MS });
+      requestRender();
+    }
+
+    // Layers are drawn scaled while a resize is in progress, then rebuilt sharp once it settles
+    function scheduleRangoliRebuild() {
+      const key = `${size}:${dpr}`;
+      if (!rangoli || rangoli.pendingKey === key || !size) return;
+      rangoli.pendingKey = key;
+      clearTimeout(rebuildTimer);
+      rebuildTimer = setTimeout(() => {
+        if (!rangoli || !size) return;
+        rangoli.layers = buildRangoliLayers(rangoli.design, size, dpr);
+        rangoli.builtSize = size;
+        rangoli.builtKey = `${size}:${dpr}`;
+        requestRender();
+      }, 180);
+    }
+
+    // Rings start in turn from the centre outward, overlapping a little like two hands at work
+    function ringProgress(r, i, at) {
+      if (!r.duration) return 1;
+      const m = r.layers.length;
+      const ringDur = Math.min(r.duration, (r.duration / m) * 1.6);
+      const startAt = m > 1 ? (i * (r.duration - ringDur)) / (m - 1) : 0;
+      return clamp01((at - r.start - startAt) / ringDur);
+    }
+
+    // Draws the rangoli as far as it has got; returns the pouring point while a ring is going in
+    function drawRangoli(r, alpha, at) {
+      if (alpha <= 0 || !r.builtSize) return null;
+      const f = size / r.builtSize;
+      const c = size / 2;
+      const R = size * RANGOLI_RADIUS;
+      const palette = THEMES[state.theme].palette;
+      let tip = null;
+      ctx.save();
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.globalAlpha = alpha;
+      r.layers.forEach((layer, i) => {
+        const p = ringProgress(r, i, at);
+        if (p <= 0) return;
+        const h = layer.half * f;
+        if (p >= 1) {
+          ctx.drawImage(layer.canvas, c - h, c - h, 2 * h, 2 * h);
+          return;
+        }
+        // Pour the ring round, clockwise from the top
+        const a0 = -Math.PI / 2;
+        const a1 = a0 + Math.PI * 2 * easeInOutSine(p);
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(c, c);
+        ctx.arc(c, c, h, a0, a1);
+        ctx.closePath();
+        ctx.clip();
+        ctx.drawImage(layer.canvas, c - h, c - h, 2 * h, 2 * h);
+        ctx.restore();
+        const rad = ((layer.ring.r0 + layer.ring.r1) / 2) * R;
+        tip = {
+          x: c + Math.cos(a1) * rad,
+          y: c + Math.sin(a1) * rad,
+          tx: -Math.sin(a1),
+          ty: Math.cos(a1),
+          glow: 0.85,
+          col: colorToRgb(palette[layer.ring.motif]),
+        };
+      });
+      ctx.restore();
+      return tip;
+    }
+
+    // Once finished, a ring of warm light expands from the centre to the rim, once
+    function drawRangoliShimmer(r, now) {
+      const t = (now - r.start - r.duration) / SHIMMER_MS;
+      if (t <= 0 || t >= 1) return;
+      const c = size / 2;
+      const R = size * RANGOLI_RADIUS;
+      const rb = easeInOutSine(t) * R * 1.15;
+      const w = R * 0.18;
+      ctx.save();
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.globalCompositeOperation = 'lighter';
+      const g = ctx.createRadialGradient(c, c, Math.max(0, rb - w), c, c, rb + w);
+      g.addColorStop(0, 'rgba(255, 244, 214, 0)');
+      g.addColorStop(0.5, `rgba(255, 244, 214, ${0.3 * Math.sin(Math.PI * t)})`);
+      g.addColorStop(1, 'rgba(255, 244, 214, 0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(c, c, R * 1.02, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // ===== Rendering =====
+    let mirrorAlpha = 0;
+    let lastFrame = 0;
+
+    // Dots are stamped from a pre-rendered sprite (faint glow plus a feathered core) instead of
+    // building two gradients per dot per frame. One sprite per size, colour and resolution; the
+    // cache resets when it grows, as it does during a theme crossfade.
+    const dotSprites = new Map();
+
+    function dotSprite(radius, rgb) {
+      const key = `${radius.toFixed(2)}:${rgb.join(',')}:${dpr}`;
+      let sprite = dotSprites.get(key);
+      if (sprite) return sprite;
+      if (dotSprites.size > 24) dotSprites.clear();
+
+      const haloR = radius * 4.5;
+      const px = Math.ceil(haloR * 2 * dpr) + 2;
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = px;
+      const g = canvas.getContext('2d');
+      const m = px / 2;
+
+      const halo = g.createRadialGradient(m, m, 0, m, m, haloR * dpr);
+      halo.addColorStop(0, rgba(rgb, 0.2));
+      halo.addColorStop(0.4, rgba(rgb, 0.06));
+      halo.addColorStop(1, rgba(rgb, 0));
+      g.fillStyle = halo;
+      g.fillRect(0, 0, px, px);
+
+      // Soft core with a feathered edge, like a pinch of rice flour
+      const core = g.createRadialGradient(m, m, 0, m, m, radius * dpr);
+      core.addColorStop(0, rgba(rgb, 0.96));
+      core.addColorStop(0.65, rgba(rgb, 0.9));
+      core.addColorStop(1, rgba(rgb, 0.25));
+      g.fillStyle = core;
+      g.beginPath();
+      g.arc(m, m, radius * dpr, 0, Math.PI * 2);
+      g.fill();
+
+      sprite = { canvas, half: px / 2 / dpr };
+      dotSprites.set(key, sprite);
+      return sprite;
+    }
+
+    function drawDot(x, y, radius, alpha, scale, rgb) {
+      if (alpha <= 0.001 || scale <= 0.001) return;
+      const { canvas: sprite, half } = dotSprite(radius, rgb);
+      const h = half * scale;
+      ctx.globalAlpha = alpha;
+      ctx.drawImage(sprite, x - h, y - h, 2 * h, 2 * h);
+      ctx.globalAlpha = 1;
+    }
+
+    function drawGrid(g, alphaK, scaleK, at) {
+      const { gap, radius, origin } = gridLayout(g.n);
+      const rgb = colorToRgb(css('--rice-flour'));
+      for (const d of g.dots) {
+        const a = arrival(d, g.start, at);
+        drawDot(origin + d.c * gap, origin + d.r * gap, radius, a.alpha * alphaK, a.scale * scaleK, rgb);
+      }
+    }
+
+    // Everything below the effects: mirrors, the kolam or rangoli, and the pulli. Returns
+    // whether any of it is still moving, and the pen or pouring tip if one is active.
+    function drawScene(now) {
+      let busy = false;
+      if (kolam) drawMirrors(kolam, easeOutCubic(mirrorAlpha));
+
+      // Cleared kolams fade out where they stopped; the current one draws itself in
+      fadingKolams = fadingKolams.filter(({ k, leftAt }) => {
+        const a = 1 - easeOutCubic(clamp01((now - leftAt) / KOLAM_FADE_MS));
+        if (a <= 0) return false;
+        drawKolamLine(k, a, leftAt);
+        busy = true;
+        return true;
+      });
+      let tip = null;
+      if (kolam) {
+        tip = drawKolamLine(kolam, 1, now);
+        if (kolam.duration && now < kolam.start + kolam.duration + SHIMMER_MS) {
+          drawShimmer(kolam, now);
+          busy = true;
+        }
+      }
+
+      // Rangoli: a recoloured one stays underneath while the new colours fade in over it;
+      // a cleared one fades out where it stopped; the current one is poured ring by ring
+      fadingRangolis = fadingRangolis.filter((f) => {
+        const k = clamp01((now - f.leftAt) / f.ms);
+        if (k >= 1) return false;
+        if (f.underneath) drawRangoli(f.r, 1, now);
+        else drawRangoli(f.r, 1 - easeOutCubic(k), f.leftAt);
+        busy = true;
+        return true;
+      });
+      if (rangoli) {
+        if (rangoli.builtKey !== `${size}:${dpr}`) scheduleRangoliRebuild();
+        const fade = rangoli.fadeIn ? clamp01((now - rangoli.fadeInAt) / rangoli.fadeIn) : 1;
+        const rTip = drawRangoli(rangoli, easeOutCubic(fade), now);
+        if (fade < 1 || (rangoli.duration && now < rangoli.start + rangoli.duration)) busy = true;
+        if (rangoli.duration && now < rangoli.start + rangoli.duration + SHIMMER_MS) {
+          drawRangoliShimmer(rangoli, now);
+          busy = true;
+        }
+        tip = tip || rTip;
+      }
+
+      // Dots go on top so the line never hides a pulli.
+      // Old grids fade out, frozen in whatever state they had when replaced.
+      leaving = leaving.filter((g) => {
+        const k = 1 - easeOutCubic(clamp01((now - g.leftAt) / FADE_MS));
+        if (k <= 0) return false;
+        drawGrid(g, k, 0.85 + 0.15 * k, g.leftAt);
+        busy = true;
+        return true;
+      });
+      if (grid) {
+        drawGrid(grid, 1, 1, now);
+        if (now < grid.start + RIPPLE_MS + POP_MS) busy = true;
+      }
+      return { busy, tip };
+    }
+
+    // Diwali sparkles and Deepam lamps keep the canvas repainting forever. Once nothing in the
+    // scene underneath is moving, it is drawn once into this cache and stamped each frame, so
+    // an idle frame costs only the effects on top.
+    const sceneCache = { canvas: document.createElement('canvas'), key: '' };
+
+    function sceneIsStill(now, theme) {
+      return now - themeChangedAt >= THEME_MS + 50
+        && Math.abs(theme.glow - lineGlow) <= 0.1
+        && mirrorAlpha === (state.showMirrors ? 1 : 0)
+        && !fadingKolams.length && !fadingRangolis.length && !leaving.length
+        && (!grid || now >= grid.start + RIPPLE_MS + POP_MS)
+        && (!kolam || !kolam.duration || now >= kolam.start + kolam.duration + SHIMMER_MS)
+        && (!rangoli || (rangoli.builtKey === `${size}:${dpr}`
+          && (!rangoli.duration || now >= rangoli.start + rangoli.duration + SHIMMER_MS)
+          && (!rangoli.fadeIn || now >= rangoli.fadeInAt + rangoli.fadeIn)));
+    }
+
+    function render(now = performance.now()) {
+      frame = 0;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, size, size);
+      let busy = false;
+      // rAF timestamps can be older than a direct render() on resize, so never let dt go negative
+      const dt = lastFrame ? Math.min(50, Math.max(0, now - lastFrame)) : 16;
+
+      // Theme crossfade: CSS interpolates the colours, so keep repainting while they move,
+      // and ease the glow and the theme's effects alongside them
+      const theme = THEMES[state.theme];
+      if (now - themeChangedAt < THEME_MS + 50) busy = true;
+      lineGlow += (theme.glow - lineGlow) * Math.min(1, dt / 220);
+      if (Math.abs(theme.glow - lineGlow) > 0.1) busy = true;
+      for (const key of ['sparkles', 'lamps']) {
+        const target = theme[key] ? 1 : 0;
+        const step = reducedMotion ? 1 : dt / THEME_MS;
+        fx[key] = clamp01(target > fx[key] ? fx[key] + step : fx[key] - step);
+        if (fx[key] > 0 && !reducedMotion) busy = true;   // these effects are always alive
+      }
+
+      // Mirror marks ease in and out
+      const mirrorTarget = state.showMirrors ? 1 : 0;
+      if (mirrorAlpha !== mirrorTarget) {
+        const step = reducedMotion ? 1 : dt / 400;
+        mirrorAlpha = mirrorTarget > mirrorAlpha ? Math.min(1, mirrorAlpha + step) : Math.max(0, mirrorAlpha - step);
+        busy = true;
+      }
+
+      // The scene: from the cache when nothing in it moves, otherwise drawn fresh
+      let tip = null;
+      const still = sceneIsStill(now, theme);
+      const key = still && [canvas.width, canvas.height, state.theme, state.lineColor, mirrorAlpha,
+        kolam && kolam.fp + kolam.start, rangoli && rangoli.design.fp + rangoli.builtKey + rangoli.fadeInAt,
+        grid && grid.n].join('|');
+      if (still && sceneCache.key === key) {
+        ctx.save();
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.drawImage(sceneCache.canvas, 0, 0);
+        ctx.restore();
+      } else {
+        const scene = drawScene(now);
+        busy = busy || scene.busy;
+        tip = scene.tip;
+        if (still) {
+          const c = sceneCache.canvas;
+          if (c.width !== canvas.width || c.height !== canvas.height) {
+            c.width = canvas.width;
+            c.height = canvas.height;
+          }
+          const g = c.getContext('2d');
+          g.clearRect(0, 0, c.width, c.height);
+          g.drawImage(canvas, 0, 0);
+          sceneCache.key = key;
+        }
+      }
+
+      if (tip) emitDust(tip, dt);
+      else lastTip = null;
+
+      // Effects float above the scene
+      drawCornerLamps(now);
+      if (fx.sparkles > 0 || sparkles.length) {
+        drawSparkles(now, dt);
+        if (sparkles.length) busy = true;
+      }
+      if (dust.length) {
+        drawDust(dt);
+        busy = true;
+      }
+      if (tip) drawLamp(tip, now);
+
+      lastFrame = busy ? now : 0;
+      if (busy) requestRender();
+    }
+
+    function requestRender() {
+      if (!frame) frame = requestAnimationFrame(render);
+    }
+
+    // ===== High-DPI sizing =====
+    // Match the backing store to exact device pixels so dots stay crisp at any zoom or screen density.
+    function resizeCanvas(entry) {
+      dpr = window.devicePixelRatio || 1;
+      const box = entry && entry.devicePixelContentBoxSize && entry.devicePixelContentBoxSize[0];
+      let w, h;
+      if (box) {
+        w = box.inlineSize;
+        h = box.blockSize;
+      } else {
+        const rect = canvas.getBoundingClientRect();
+        w = Math.round(rect.width * dpr);
+        h = Math.round(rect.height * dpr);
+      }
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w;
+        canvas.height = h;
+      }
+      size = w / dpr;
+      cancelAnimationFrame(frame);
+      render(); // draw straight away so a resize never flashes blank
+    }
+
+    const resizeObserver = new ResizeObserver(([entry]) => resizeCanvas(entry));
+    try {
+      resizeObserver.observe(canvas, { box: 'device-pixel-content-box' });
+    } catch {
+      resizeObserver.observe(canvas);
+    }
+
+    // Fallback for browsers without device-pixel boxes: redraw when screen density changes
+    (function watchDpr() {
+      matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`)
+        .addEventListener('change', () => {
+          resizeCanvas();
+          if (typeof sizeWave === 'function') sizeWave();   // the voice waveform has its own canvas
+          watchDpr();
+        }, { once: true });
+    })();
+
+    // ===== UI =====
+    const paceNames = ['Slow', 'Calm', 'Brisk'];
+
+    function updateSliderFill(input) {
+      const pct = ((input.value - input.min) / (input.max - input.min)) * 100;
+      input.style.setProperty('--fill', `${pct}%`);
+    }
+    document.querySelectorAll('.slider').forEach(updateSliderFill);
+
+    // A tick for each grid size, labelled at both ends and the default
+    const gridInput = $('gridSize');
+    for (let n = +gridInput.min; n <= +gridInput.max; n++) {
+      const tick = document.createElement('span');
+      tick.dataset.n = n;
+      if (n === +gridInput.min || n === +gridInput.max || n === 7) tick.dataset.label = n;
+      $('gridTicks').append(tick);
+    }
+    function updateTicks(n) {
+      $('gridTicks').querySelectorAll('span').forEach((t) => t.classList.toggle('on', +t.dataset.n <= n));
+    }
+    updateTicks(state.gridSize);
+
+    function updateCaption() {
+      let text;
+      if (state.mode === 'rangoli') {
+        text = rangoli
+          ? `Rangoli · ${rangoli.design.folds}-fold · ${rangoli.design.rings.length - 1} rings · No. ${rangoli.design.seed}`
+          : `Rangoli · ${state.folds}-fold`;
+      } else {
+        const n = state.gridSize;
+        text = `Sikku kolam · ${n} × ${n} pulli`;
+        if (kolam) text += ` · ${SYMMETRY_NAMES[kolam.symmetry]} · No. ${kolam.seed}`;
+      }
+      document.querySelector('.threshold-caption').textContent = text;
+    }
+
+    // Redraw after settings settle, so dragging a slider doesn't regenerate on every step
+    let redrawTimer = 0;
+    function scheduleKolam(options, wait = 350) {
+      clearTimeout(redrawTimer);
+      redrawTimer = setTimeout(() => drawKolam(options), wait);
+    }
+
+    function updateSymmetryNote() {
+      $('symNote').hidden = state.gridSize % 2 === 1;
+    }
+
+    // Shared by the slider and voice; returns false if the size didn't change
+    function applyGridSize(n) {
+      gridInput.value = n;
+      updateSliderFill(gridInput);
+      updateTicks(n);
+      if (n === state.gridSize) return false;
+      state.gridSize = n;
+      $('gridOut').textContent = `${n} × ${n}`;
+      updateSymmetryNote();
+      clearKolam();
+      setGrid(n);
+      scheduleKolam({ delay: reducedMotion ? 0 : 600 });
+      return true;
+    }
+    gridInput.addEventListener('input', (e) => applyGridSize(+e.target.value));
+
+    $('speed').addEventListener('input', (e) => {
+      state.pace = +e.target.value;
+      updateSliderFill(e.target);
+      $('speedOut').textContent = paceNames[state.pace - 1];
+    });
+
+    const weaveName = (w) => (w < 0.4 ? 'Light' : w <= 0.6 ? 'Balanced' : 'Dense');
+    function setWeave(w) {
+      state.weave = w;
+      $('weave').value = Math.round(w * 100);
+      updateSliderFill($('weave'));
+      $('weaveOut').textContent = weaveName(w);
+    }
+    $('weave').addEventListener('input', (e) => {
+      setWeave(+e.target.value / 100);
+      scheduleKolam({ seed: kolam ? kolam.seed : undefined });
+    });
+
+    function setSymmetry(sym) {
+      state.symmetry = sym;
+      document.querySelectorAll('.segmented [data-symmetry]').forEach((b) =>
+        b.setAttribute('aria-checked', b.dataset.symmetry === sym));
+    }
+    document.querySelectorAll('.segmented [data-symmetry]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (state.symmetry === btn.dataset.symmetry) return;
+        setSymmetry(btn.dataset.symmetry);
+        drawKolam({ seed: kolam ? kolam.seed : undefined });
+      });
+    });
+
+    $('showMirrors').addEventListener('change', (e) => {
+      state.showMirrors = e.target.checked;
+      requestRender();
+    });
+
+    function selectColor(varName) {
+      document.querySelectorAll('.swatch').forEach((s) => s.setAttribute('aria-pressed', s.dataset.color === varName));
+      state.lineColor = varName;
+      requestRender();
+    }
+    document.querySelectorAll('.swatch').forEach((sw) => {
+      sw.addEventListener('click', () => selectColor(sw.dataset.color));
+    });
+
+    // Switching theme flips data-theme; CSS crossfades the colours over 800 ms
+    function syncThemeChips(id) {
+      document.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-checked', c.dataset.theme === id));
+    }
+    function applyTheme(id) {
+      if (!THEMES[id]) return;
+      state.theme = id;
+      document.documentElement.dataset.theme = id;
+      syncThemeChips(id);
+      selectColor('--theme-line');
+      themeChangedAt = performance.now();
+      try { localStorage.setItem('kolam-theme', id); } catch { /* storage unavailable */ }
+      recolourRangoli();
+      requestRender();
+    }
+    document.querySelectorAll('.chip').forEach((chip) => {
+      chip.addEventListener('click', () => applyTheme(chip.dataset.theme));
+    });
+
+    // The saved theme was applied in <head> before first paint; match the state to it
+    if (THEMES[document.documentElement.dataset.theme]) {
+      state.theme = document.documentElement.dataset.theme;
+      lineGlow = THEMES[state.theme].glow;
+      syncThemeChips(state.theme);
+    }
+
+    function setPanelOpen(open) {
+      state.panelOpen = open;
+      $('panel').classList.toggle('collapsed', !open);
+      $('app').classList.toggle('panel-open', open);
+      $('panelToggle').setAttribute('aria-expanded', open);
+      $('sheetHandle').setAttribute('aria-expanded', open);
+      if (!open) $('panel').scrollTop = 0;   // a closed sheet always peeks at its title
+    }
+    $('panelToggle').addEventListener('click', () => setPanelOpen(!state.panelOpen));
+
+    // ===== Micro-interactions =====
+    // A soft ripple spreads from wherever a control is pressed
+    const RIPPLE_TARGETS = '.btn, .chip, .pill, .segmented button, .mode-switch button, .orb, .g-open';
+    document.addEventListener('pointerdown', (e) => {
+      if (reducedMotion) return;
+      const el = e.target.closest(RIPPLE_TARGETS);
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const d = Math.max(r.width, r.height) * 2.2;
+      const dot = document.createElement('span');
+      dot.className = 'ripple';
+      dot.style.cssText = `width:${d}px;height:${d}px;left:${e.clientX - r.left - d / 2}px;top:${e.clientY - r.top - d / 2}px`;
+      el.append(dot);
+      dot.addEventListener('animationend', () => dot.remove());
+    });
+
+    // ===== Bottom sheet (phones) =====
+    // Drag the handle or the title and the sheet follows your finger; let go and it settles
+    // open or closed by how far and how fast you moved. A tap toggles it.
+    const phoneQuery = matchMedia('(max-width: 900px)');
+    (function bottomSheet() {
+      const panel = $('panel');
+      const grips = [$('sheetHandle'), panel.querySelector('h2')];
+      let drag = null;
+      const closedOffset = () => panel.offsetHeight - parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--peek'));
+
+      grips.forEach((grip) => {
+        grip.addEventListener('pointerdown', (e) => {
+          if (!phoneQuery.matches) return;
+          drag = { startY: e.clientY, lastY: e.clientY, lastT: e.timeStamp, v: 0, moved: false, base: state.panelOpen ? 0 : closedOffset() };
+          panel.style.transition = 'none';
+          grip.setPointerCapture(e.pointerId);
+        });
+        grip.addEventListener('pointermove', (e) => {
+          if (!drag) return;
+          const dy = e.clientY - drag.startY;
+          if (Math.abs(dy) > 5) drag.moved = true;
+          panel.style.transform = `translateY(${Math.min(closedOffset(), Math.max(0, drag.base + dy))}px)`;
+          drag.v = (e.clientY - drag.lastY) / Math.max(1, e.timeStamp - drag.lastT);   // px per ms
+          drag.lastY = e.clientY;
+          drag.lastT = e.timeStamp;
+        });
+        const end = () => {
+          if (!drag) return;
+          const { moved, v, base, startY, lastY } = drag;
+          drag = null;
+          // Hand back to the CSS states in the same frame, so the transition carries on from the finger
+          panel.style.transition = '';
+          panel.style.transform = '';
+          if (!moved) return setPanelOpen(!state.panelOpen);
+          const y = base + (lastY - startY);
+          setPanelOpen(v < -0.35 ? true : v > 0.35 ? false : y < closedOffset() / 2);
+        };
+        grip.addEventListener('pointerup', end);
+        grip.addEventListener('pointercancel', end);
+      });
+
+      // On a phone, tapping the courtyard closes an open sheet
+      document.querySelector('.stage').addEventListener('click', () => {
+        if (phoneQuery.matches && state.panelOpen) setPanelOpen(false);
+      });
+    })();
+
+    // ===== Modes: Kolam and Rangoli =====
+    const memory = { kolam: null, rangoli: null };   // the last design shown in each mode
+
+    const drawNew = () => (state.mode === 'kolam' ? drawKolam() : newRangoli());
+    const clearCurrent = () => (state.mode === 'kolam' ? clearKolam() : clearRangoli());
+    const currentDesign = () => (state.mode === 'kolam'
+      ? kolam && { mode: 'kolam', k: kolam }
+      : rangoli && { mode: 'rangoli', r: rangoli.design });
+
+    // Switching back to a mode brings back what was there, unless `fresh` asks for a new design.
+    // With `show: false` the caller draws a specific design itself (the gallery does).
+    function setMode(mode, { show = true, fresh = false } = {}) {
+      if (state.mode === mode) return false;
+      clearTimeout(redrawTimer);
+      if (kolam) memory.kolam = kolam.seed;
+      if (rangoli) memory.rangoli = rangoli.design;
+      state.mode = mode;
+      document.body.dataset.mode = mode;
+      document.querySelectorAll('.mode-switch [data-mode]').forEach((b) =>
+        b.setAttribute('aria-checked', b.dataset.mode === mode));
+      $('drawBtn').textContent = mode === 'kolam' ? 'Draw kolam' : 'Draw rangoli';
+
+      if (mode === 'rangoli') {
+        clearKolam();
+        if (grid && !reducedMotion) leaving.push({ ...grid, leftAt: performance.now() });
+        grid = null;                                  // a rangoli needs no pulli
+        if (show) {
+          if (fresh || !memory.rangoli) newRangoli({ delay: 350 });
+          else showRangoli(memory.rangoli, { delay: 350 });
+        }
+      } else {
+        clearRangoli();
+        setGrid(state.gridSize);
+        if (show) drawKolam({ seed: fresh ? undefined : memory.kolam ?? undefined, delay: reducedMotion ? 0 : 700 });
+      }
+      updateCaption();
+      renderGallery();
+      requestRender();
+      return true;
+    }
+    document.querySelectorAll('.mode-switch [data-mode]').forEach((b) =>
+      b.addEventListener('click', () => setMode(b.dataset.mode)));
+
+    function setFolds(f) {
+      state.folds = f;
+      document.querySelectorAll('[data-folds]').forEach((b) => b.setAttribute('aria-checked', +b.dataset.folds === f));
+      updateCaption();
+    }
+    document.querySelectorAll('[data-folds]').forEach((b) => {
+      b.addEventListener('click', () => {
+        const f = +b.dataset.folds;
+        if (f === state.folds) return;
+        setFolds(f);
+        newRangoli();
+      });
+    });
+
+    $('drawBtn').addEventListener('click', () => { clearTimeout(redrawTimer); drawNew(); });
+    $('clearBtn').addEventListener('click', () => { clearTimeout(redrawTimer); clearCurrent(); });
+    $('surpriseBtn').addEventListener('click', () => surprise());
+    $('saveBtn').addEventListener('click', () => saveDesign());
+
+    // ===== Stills: export and thumbnails =====
+    // Renders a finished design off-screen at any resolution by pointing the drawing code at
+    // another context. Everything scales with dpr, so a still matches the screen exactly.
+    const EXPORT_PX = 3000;
+    const THUMB_PX = 176;
+
+    function renderStill(px, design, { watermark = false, transparent = false } = {}) {
+      const out = document.createElement('canvas');
+      out.width = out.height = px;
+      const saved = { ctx, dpr };
+      ctx = out.getContext('2d');
+      dpr = px / size;
+      try {
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        if (!transparent) {
+          ctx.fillStyle = css('--granite');
+          ctx.fillRect(0, 0, size, size);
+          const glow = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size * 0.72);
+          glow.addColorStop(0, rgba(colorToRgb(css('--rice-flour')), 0.04));
+          glow.addColorStop(1, 'rgba(0, 0, 0, 0.28)');
+          ctx.fillStyle = glow;
+          ctx.fillRect(0, 0, size, size);
+        }
+
+        if (design.mode === 'kolam') {
+          drawKolamLine(design.k, 1, Infinity);
+          drawGrid(makeGrid(design.k.n, -Infinity), 1, 1, 0);
+          drawCornerLamps(0, design.k.n);
+        } else {
+          const view = { design: design.r, layers: buildRangoliLayers(design.r, size, dpr), builtSize: size, start: 0, duration: 0 };
+          drawRangoli(view, 1, 0);
+        }
+        if (watermark) drawWatermark(design);
+      } finally {
+        ctx = saved.ctx;
+        dpr = saved.dpr;
+      }
+      return out;
+    }
+
+    // A small, quiet signature in the bottom-right corner
+    function drawWatermark(design) {
+      const fs = size * 0.03;
+      const x = size * 0.965;
+      const y = size * 0.968;
+      ctx.save();
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.textAlign = 'right';
+      ctx.fillStyle = rgba(colorToRgb(css('--rice-flour')), 0.55);
+      ctx.font = `italic 500 ${fs}px "Cormorant Garamond", Georgia, serif`;
+      ctx.fillText('Kolam Studio', x, y - fs * 0.62);
+      ctx.font = `500 ${fs * 0.34}px Inter, system-ui, sans-serif`;
+      if ('letterSpacing' in ctx) ctx.letterSpacing = `${fs * 0.06}px`;
+      ctx.fillStyle = rgba(colorToRgb(css('--accent')), 0.7);
+      const label = design.mode === 'kolam'
+        ? `SIKKU KOLAM · ${design.k.n} × ${design.k.n} · NO. ${design.k.seed}`
+        : `RANGOLI · ${design.r.folds}-FOLD · NO. ${design.r.seed}`;
+      ctx.fillText(label, x, y);
+      ctx.restore();
+    }
+
+    async function saveDesign() {
+      const design = currentDesign();
+      if (!design || !size) {
+        showToast('Draw something first', 'hint');
+        return;
+      }
+      await document.fonts.ready;
+      const still = renderStill(EXPORT_PX, design, { watermark: true });
+      const seed = design.mode === 'kolam' ? design.k.seed : design.r.seed;
+      still.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.download = `kolam-studio-${design.mode}-${seed}.png`;
+        link.href = url;
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 4000);
+      }, 'image/png');
+      const added = addToGallery(design);
+      showToast(added ? 'Saved to gallery · PNG downloaded' : 'PNG downloaded · already in gallery');
+    }
+
+    // ===== Gallery =====
+    // Designs are stored as recipes (mode, seed, settings, theme) plus a small thumbnail, so
+    // opening one regenerates it exactly.
+    const GALLERY_KEY = 'kolam-studio-gallery';
+    const GALLERY_MAX = 24;
+    let gallery = [];
+
+    const CLASSICS = [
+      { mode: 'kolam', n: 5, symmetry: 'rotational', weave: 0.5, seed: 21503 },
+      { mode: 'rangoli', folds: 12, seed: 26812 },
+      { mode: 'kolam', n: 7, symmetry: 'rotational', weave: 0.6, seed: 70707 },
+      { mode: 'rangoli', folds: 8, seed: 80808 },
+      { mode: 'kolam', n: 9, symmetry: 'mirrored', weave: 0.45, seed: 90909 },
+    ];
+
+    function storeGallery() {
+      try {
+        localStorage.setItem(GALLERY_KEY, JSON.stringify(gallery));
+      } catch {
+        showToast('This browser couldn’t keep the gallery', 'error');
+      }
+    }
+
+    function galleryEntry(design, extra = {}) {
+      const base = {
+        id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+        mode: design.mode,
+        theme: state.theme,
+        thumb: renderStill(THUMB_PX, design).toDataURL('image/jpeg', 0.86),
+      };
+      if (design.mode === 'kolam') {
+        const k = design.k;
+        return { ...base, n: k.n, symmetry: k.requestedSymmetry, weave: k.weave, seed: k.seed, lineColor: state.lineColor, fp: k.fp, ...extra };
+      }
+      return { ...base, folds: design.r.folds, seed: design.r.seed, fp: design.r.fp, ...extra };
+    }
+
+    function addToGallery(design) {
+      const fp = design.mode === 'kolam' ? design.k.fp : design.r.fp;
+      if (gallery.some((g) => g.fp === fp)) return false;
+      gallery.unshift(galleryEntry(design));
+      gallery = gallery.slice(0, GALLERY_MAX);
+      storeGallery();
+      renderGallery();
+      $('gallery').scrollTo({ left: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
+      return true;
+    }
+
+    function initGallery() {
+      let stored = null;
+      try { stored = JSON.parse(localStorage.getItem(GALLERY_KEY)); } catch { /* unreadable */ }
+      if (Array.isArray(stored)) {
+        gallery = stored;
+      } else {
+        // First visit: start with a few classic designs
+        const lineColor = state.lineColor;
+        state.lineColor = '--theme-line';
+        gallery = CLASSICS.map((c) => galleryEntry(
+          c.mode === 'kolam'
+            ? { mode: 'kolam', k: buildKolam(c.n, { symmetry: c.symmetry, weave: c.weave, seed: c.seed }) }
+            : { mode: 'rangoli', r: generateRangoli(c.seed, c.folds) },
+          { classic: true },
+        ));
+        state.lineColor = lineColor;
+        storeGallery();
+      }
+      renderGallery();
+    }
+
+    const galleryTitle = (item) => (item.mode === 'kolam'
+      ? `Kolam ${item.n} × ${item.n} · ${THEMES[item.theme].name} · No. ${item.seed}`
+      : `Rangoli ${item.folds}-fold · ${THEMES[item.theme].name} · No. ${item.seed}`);
+
+    function makeGalleryNode(item) {
+      const node = document.createElement('div');
+      node.className = 'g-item';
+      node.setAttribute('role', 'listitem');
+      node.dataset.id = item.id;
+
+      const open = document.createElement('button');
+      open.className = 'g-open';
+      open.title = galleryTitle(item);
+      open.setAttribute('aria-label', `Open ${galleryTitle(item)}`);
+      const img = document.createElement('img');
+      img.src = item.thumb;
+      img.alt = '';
+      const badge = document.createElement('span');
+      badge.className = 'g-badge';
+      badge.textContent = item.mode === 'kolam' ? `${item.n}×${item.n}` : `${item.folds}-fold`;
+      open.append(img, badge);
+      open.addEventListener('click', () => openGalleryItem(item));
+
+      const remove = document.createElement('button');
+      remove.className = 'g-remove';
+      remove.textContent = '×';
+      remove.setAttribute('aria-label', `Remove ${galleryTitle(item)}`);
+      remove.addEventListener('click', () => {
+        gallery = gallery.filter((g) => g.id !== item.id);
+        storeGallery();
+        renderGallery();
+      });
+
+      node.append(open, remove);
+      return node;
+    }
+
+    // Keyed update: existing thumbnails stay put, so only new ones animate in
+    function renderGallery() {
+      const el = $('gallery');
+      const currentFp = state.mode === 'kolam' ? kolam && kolam.fp : rangoli && rangoli.design.fp;
+      el.querySelector('.gallery-empty')?.remove();
+      const existing = new Map([...el.children].map((c) => [c.dataset.id, c]));
+      gallery.forEach((item, i) => {
+        const node = existing.get(item.id) || makeGalleryNode(item);
+        existing.delete(item.id);
+        node.classList.toggle('current', item.fp === currentFp);
+        if (el.children[i] !== node) el.insertBefore(node, el.children[i] || null);
+      });
+      existing.forEach((node) => node.remove());
+      if (!gallery.length) {
+        const empty = document.createElement('p');
+        empty.className = 'gallery-empty';
+        empty.textContent = 'Saved designs appear here.';
+        el.append(empty);
+      }
+      $('galleryCount').textContent = gallery.length || '';
+    }
+
+    // Opening a design restores its theme, mode and settings, then redraws that exact seed
+    function openGalleryItem(item) {
+      clearTimeout(redrawTimer);
+      if (item.theme !== state.theme) applyTheme(item.theme);
+      if (item.mode === 'kolam') {
+        setMode('kolam', { show: false });
+        setSymmetry(item.symmetry);
+        setWeave(item.weave);
+        const resized = applyGridSize(item.n);
+        clearTimeout(redrawTimer);                 // applyGridSize queues a random kolam; draw this one
+        drawKolam({ seed: item.seed, delay: resized && !reducedMotion ? 600 : 0 });
+        selectColor(item.lineColor || '--theme-line');
+      } else {
+        setMode('rangoli', { show: false });
+        setFolds(item.folds);
+        showRangoli(generateRangoli(item.seed, item.folds));
+      }
+    }
+
+    // ===== Surprise =====
+    // A short shuffle through themes and sizes, slowing like a wheel, then a fresh design
+    let shuffling = false;
+
+    function surprise() {
+      if (shuffling) return;
+      shuffling = true;
+      clearTimeout(redrawTimer);
+      const themeIds = Object.keys(THEMES);
+      const others = themeIds.filter((t) => t !== state.theme);
+      const finalTheme = others[Math.floor(Math.random() * others.length)];
+      const finalN = 3 + Math.floor(Math.random() * 9);
+      const finalFolds = Math.random() < 0.5 ? 8 : 12;
+      const chips = [...document.querySelectorAll('.chip')];
+      const caption = document.querySelector('.threshold-caption');
+      const steps = reducedMotion ? [] : [60, 60, 65, 70, 80, 95, 115, 140, 170, 210];
+      let i = 0;
+
+      clearCurrent();
+      const tick = () => {
+        if (i < steps.length) {
+          const t = themeIds[Math.floor(Math.random() * themeIds.length)];
+          chips.forEach((c) => c.classList.toggle('shuffle-on', c.dataset.theme === t));
+          let what;
+          if (state.mode === 'kolam') {
+            const n = 3 + Math.floor(Math.random() * 9);
+            gridInput.value = n;
+            updateSliderFill(gridInput);
+            updateTicks(n);
+            $('gridOut').textContent = `${n} × ${n}`;
+            what = `${n} × ${n}`;
+          } else {
+            const f = Math.random() < 0.5 ? 8 : 12;
+            document.querySelectorAll('[data-folds]').forEach((b) => b.setAttribute('aria-checked', +b.dataset.folds === f));
+            what = `${f} petals`;
+          }
+          caption.textContent = `Shuffling · ${what} · ${THEMES[t].name}`;
+          setTimeout(tick, steps[i++]);
+          return;
+        }
+        chips.forEach((c) => c.classList.remove('shuffle-on'));
+        shuffling = false;
+        applyTheme(finalTheme);
+        let what;
+        if (state.mode === 'kolam') {
+          const resized = applyGridSize(finalN);
+          clearTimeout(redrawTimer);
+          drawKolam({ delay: resized && !reducedMotion ? 600 : 0 });
+          what = `${finalN} × ${finalN}`;
+        } else {
+          setFolds(finalFolds);
+          newRangoli();
+          what = `${finalFolds} petals`;
+        }
+        showToast(`Surprise · ${THEMES[finalTheme].name} · ${what}`);
+      };
+      tick();
+    }
+
+    // ===== Voice commands: forgiving matching =====
+    // Recognisers mishear, so accept number words, "9x9" / "nine by nine" / "grid nine",
+    // and the usual mishearings of "kolam" and "grid".
+    const NUMBER_WORDS = {
+      one: 1, won: 1, two: 2, three: 3, tree: 3, four: 4, five: 5, six: 6, seven: 7,
+      eight: 8, nine: 9, nein: 9, ten: 10, eleven: 11, twelve: 12, thirteen: 13,
+    };
+    const COLOR_WORDS = [
+      [/\b(rice ?flour|rice|flour|white|cream|ivory|chalk)\b/, '--rice-flour', 'Rice flour white'],
+      [/\b(yellow|turmeric|haldi|manjal|lemon)\b/, '--kolam-line', 'Kolam yellow'],
+      [/\b(red|kum ?kum\w*|kun ?kum\w*|sindoor|vermilion|crimson|maroon|scarlet)\b/, '--kumkum-red', 'Kumkum red'],
+      [/\b(gold|golden|brass|bronze|amber)\b/, '--brass-gold', 'Brass gold'],
+    ];
+    const COLOR_CUE = /\b(colou?rs?|collar|caller|kalar|paint|make it|change|turn it|switch|line)\b/;
+    const GRID_CUE  = /\b(grids?|grade|greed|great|grit|size|dots?|pulli|board)\b/;
+    const KOLAM     = /\b(kolams?|kolum|kollam|kolaam|golam|columns?|colum|colon|callum)\b/;
+    const DRAW_CUE  = /\b(new|draw|another|generate|create|next|again|redraw|fresh)\b/;
+    const RANGOLI   = /\b(rangolis?|rangoly|rangolee|rongoli|rangole|rangeli|ranguli|rangoli s|rumbling|rambling)\b/;
+    const MODE_CUE  = /\b(modes?|mood)\b/;
+    const SWITCH_MODE = /\b(switch|toggle|change|other|swap) (the )?(modes?|mood)\b/;
+    const PETAL_CUE = /\b(petals?|pedals?|petal s|folds?|fold symmetry)\b/;
+    const SURPRISE  = /\b(surprise|surprised|random|shuffle|lucky)\b/;
+    const SAVE_CUE  = /\b(save|saved|download|export)\b/;
+    const CLEAR_CUE = /\b(clear|clean|erase|wipe|reset|empty)\b/;
+    const STOP_CUE  = /\b(stop|mic off|sleep|that s all|thats all)\b/;
+    // Checked in order: "deepavali" must reach Diwali before "deepa" can claim it for Deepam
+    const THEME_WORDS = [
+      [/\b(diwali|deepavali|deepawali|divali|dewali|deewali|devoli|devali|diwaali|dilwali)\b/, 'diwali'],
+      [/\b(pongal|pongals|pongel|pongol|pongle|bongal|ponggal|sankranti|sankranthi)\b/, 'pongal'],
+      [/\b(karthigai|karthikai|karthika|karthikeya|kartigai|kartik\w*|deepam|deepa|dipam|deepum)\b/, 'deepam'],
+      [/\b(margazhi|margazi|marghazi|margali|marghali|margari|margery|margaret|markazhi|marg\w*)\b/, 'margazhi'],
+      [/\b(dusk|courtyard|default)\b/, 'dusk'],
+    ];
+
+    // ===== Tamil =====
+    // Tamil speech arrives in Tamil script. Each stem below swallows its suffixes (கோலத்தை,
+    // அழித்துவிடு…) and becomes the English word the parser already understands. Longer
+    // stems come first so பதினொன்று isn't read as ஒன்று.
+    const TAMIL_WORDS = [
+      ['பன்னிரண்டு', '12'], ['பதினொன்று', '11'], ['பத்து', '10'], ['ஒன்பது', '9'], ['எட்டு', '8'],
+      ['ஏழு', '7'], ['ஆறு', '6'], ['ஐந்து', '5'], ['நான்கு', '4'], ['மூன்று', '3'],
+      ['ரங்கோலி', 'rangoli'], ['கோல', 'kolam'],
+      ['தீபாவளி', 'diwali'], ['பொங்கல்', 'pongal'], ['கார்த்திகை', 'karthigai'], ['தீப', 'deepam'],
+      ['மார்கழி', 'margazhi'], ['அந்தி', 'dusk'],
+      ['போடு', 'new'], ['போட', 'new'], ['வரை', 'draw'], ['புதிய', 'new'], ['புது', 'new'], ['இன்னொ', 'another'],
+      ['அழி', 'clear'], ['துடை', 'clear'],
+      ['கட்ட', 'grid'], ['புள்ளி', 'grid'], ['இதழ', 'petals'],
+      ['சிவப்பு', 'red'], ['மஞ்சள்', 'yellow'], ['வெள்ளை', 'white'], ['தங்க', 'gold'], ['நிற', 'colour'],
+      ['ஆச்சரிய', 'surprise'], ['சர்ப்ரைஸ்', 'surprise'], ['சேமி', 'save'],
+      ['மாற்று', 'switch'], ['முறை', 'mode'], ['நிறுத்து', 'stop'],
+    ];
+    const TAMIL_RES = TAMIL_WORDS.map(([stem, en]) => [new RegExp(`${stem}[\\u0B80-\\u0BFF]*`, 'g'), ` ${en} `]);
+    const translateTamil = (text) => TAMIL_RES.reduce((t, [re, en]) => t.replace(re, en), text);
+
+    // The same Tamil words as an English recogniser hears them: "kolam podu" arrives as
+    // "column board", "azhi" (erase) as "R"
+    const TRANSLITERATED = [
+      [/\b(podu|bodu|potu|pottu|board|boards|body|po do)\b/g, ' new '],
+      [/^(r|are|ar|aa?zhi|azhi ?du|azhichu?du|ali|alli|ari)( to| do)?$/, 'clear'],
+    ];
+
+    function normalise(text) {
+      const plain = translateTamil(text)
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      return TRANSLITERATED.reduce((t, [re, en]) => t.replace(re, en), plain)
+        .replace(/\b[a-z]+\b/g, (w) => (w in NUMBER_WORDS ? NUMBER_WORDS[w] : w))
+        .replace(/(\d)\s*x\s*(\d)/g, '$1 by $2')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    // Returns the actions found in a phrase, or null. One phrase can hold several,
+    // e.g. "draw a red nine by nine kolam".
+    function parseCommand(text) {
+      const t = normalise(text);
+      if (!t) return null;
+      const cmd = {};
+
+      const pair = t.match(/\b(\d+) (?:(?:by|into|cross|buy|bye|bi|times) )?(\d+)\b/);
+      const single = t.match(/\b(\d+)\b/);
+      if (single && PETAL_CUE.test(t)) cmd.folds = +single[1];          // "twelve petals"
+      else if (pair) cmd.grid = +pair[1];
+      else if (single && (GRID_CUE.test(t) || KOLAM.test(t) || t === single[1])) cmd.grid = +single[1];
+
+      if (SWITCH_MODE.test(t)) cmd.mode = 'toggle';
+      else if (RANGOLI.test(t)) cmd.mode = 'rangoli';
+      else if (KOLAM.test(t) && MODE_CUE.test(t)) cmd.mode = 'kolam';
+      if (SURPRISE.test(t)) cmd.surprise = true;
+      if (SAVE_CUE.test(t)) cmd.save = true;
+
+      const color = COLOR_WORDS.find(([re]) => re.test(t));
+      if (color && (COLOR_CUE.test(t) || KOLAM.test(t) || DRAW_CUE.test(t) || t.split(' ').length <= 3)) {
+        cmd.color = color;
+      }
+
+      const theme = THEME_WORDS.find(([re]) => re.test(t));
+      if (theme) cmd.theme = theme[1];
+
+      if (CLEAR_CUE.test(t)) cmd.clear = true;
+      // "Pongal kolam" names a theme; only an explicit "new"/"draw" also redraws
+      if (DRAW_CUE.test(t) || (KOLAM.test(t) && !cmd.clear && !cmd.theme && !cmd.mode && !cmd.save)) cmd.draw = true;
+      // "New kolam" / "kolam podu" asks for a kolam even from rangoli mode
+      if (cmd.draw && KOLAM.test(t) && !cmd.mode && !cmd.theme) cmd.mode = 'kolam';
+      if (STOP_CUE.test(t) && Object.keys(cmd).length === 0) cmd.stop = true;
+
+      return Object.keys(cmd).length ? cmd : null;
+    }
+
+    function runCommand(cmd) {
+      const done = [];
+      if (cmd.grid !== undefined && (cmd.grid < 3 || cmd.grid > 11)) {
+        showToast('Grids go from 3 to 11', 'error');
+        return;
+      }
+      if (cmd.folds !== undefined && cmd.folds !== 8 && cmd.folds !== 12) {
+        showToast('Rangoli comes in 8 or 12 petals', 'error');
+        return;
+      }
+      if (cmd.theme && !cmd.surprise) {
+        applyTheme(cmd.theme);
+        done.push(`${THEMES[cmd.theme].name} theme`);
+      }
+
+      // A size implies kolam mode and petals imply rangoli, whatever mode we're in
+      let target = cmd.mode === 'toggle' ? (state.mode === 'kolam' ? 'rangoli' : 'kolam') : cmd.mode;
+      if (cmd.grid !== undefined) target = 'kolam';
+      if (cmd.folds !== undefined) target = 'rangoli';
+      const sameMode = target === state.mode;
+      // A specific design (size, petals, "new", surprise) replaces whatever the switch would restore
+      const drawsItself = cmd.grid !== undefined || cmd.folds !== undefined || cmd.draw || cmd.surprise;
+      if (target && !sameMode) {
+        setMode(target, { show: !drawsItself });
+        done.push(target === 'kolam' ? 'Kolam mode' : 'Rangoli mode');
+      }
+
+      if (cmd.surprise) {
+        surprise();                          // it announces its own pick when the shuffle lands
+        return;
+      }
+      if (cmd.grid !== undefined) {
+        const n = cmd.grid;
+        const resized = applyGridSize(n);
+        clearTimeout(redrawTimer);
+        drawKolam({ delay: resized && !reducedMotion ? 600 : 0 });
+        done.push(`Grid ${n} × ${n}`);
+      }
+      if (cmd.folds !== undefined) {
+        setFolds(cmd.folds);
+        newRangoli();
+        done.push(`${cmd.folds} petals`);
+      }
+      if (cmd.color) {
+        selectColor(cmd.color[1]);
+        done.push(cmd.color[2]);
+      }
+      if (cmd.grid === undefined && cmd.folds === undefined) {
+        // Saying the mode you're already in ("rangoli") asks for a new one
+        const wantsNew = cmd.draw || (cmd.mode && cmd.mode !== 'toggle' && sameMode);
+        if (cmd.clear && !cmd.draw) {
+          clearTimeout(redrawTimer);
+          clearCurrent();
+          done.push('Cleared');
+        } else if (wantsNew) {
+          clearTimeout(redrawTimer);
+          drawNew();
+          done.push(state.mode === 'kolam' ? 'New kolam' : 'New rangoli');
+        }
+      }
+      if (cmd.save) {
+        saveDesign();                        // shows its own toast
+        return;
+      }
+      if (cmd.stop) {
+        stopListening();
+        done.push('Listening off');
+      }
+      if (done.length) showToast(done.join(' · '));
+    }
+
+    // ===== Toast =====
+    const TOAST_ICONS = {
+      ok: 'M5 12.5l4.5 4.5L19 7.5',
+      error: 'M12 7v6M12 17h.01',
+      hint: 'M9.5 9a2.5 2.5 0 1 1 3.4 2.3c-.6.3-.9.8-.9 1.4v.6M12 17h.01',
+    };
+    let toastTimer = 0;
+
+    function showToast(text, kind = 'ok') {
+      const toast = $('toast');
+      toast.className = `toast ${kind}`;
+      $('toastPath').setAttribute('d', TOAST_ICONS[kind]);
+      $('toastText').textContent = text;
+      void toast.offsetWidth;            // restart the entrance and the tick animation
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+    }
+
+    // ===== Subtitles =====
+    // Words already on screen stay put; only new or corrected words fade in, one after another.
+    let subtitleWords = [];
+    let subtitleTimer = 0;
+
+    function showSubtitle(text, isFinal) {
+      const el = $('subtitles');
+      const words = text.trim().split(/\s+/).filter(Boolean);
+      if (!words.length) return;
+      clearTimeout(subtitleTimer);
+      el.classList.remove('fading');
+      document.body.classList.add('speaking');
+
+      let same = 0;
+      while (same < words.length && same < subtitleWords.length && words[same] === subtitleWords[same]) same++;
+      while (el.children.length > same) el.lastChild.remove();
+      words.slice(same).forEach((word, j) => {
+        const span = document.createElement('span');
+        span.className = 'w';
+        span.textContent = word;
+        span.style.animationDelay = `${j * 70}ms`;
+        el.append(span);
+      });
+      subtitleWords = words;
+
+      if (isFinal) subtitleTimer = setTimeout(hideSubtitles, 2600);
+    }
+
+    function hideSubtitles() {
+      $('subtitles').classList.add('fading');
+      document.body.classList.remove('speaking');
+      subtitleTimer = setTimeout(() => {
+        $('subtitles').replaceChildren();
+        subtitleWords = [];
+      }, 600);
+    }
+
+    // ===== Speech recognition =====
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let recognition = null;
+    let restartTimer = 0;
+
+    function createRecognition() {
+      const r = new SpeechRecognition();
+      r.lang = state.lang;
+      r.continuous = true;
+      r.interimResults = true;
+      r.maxAlternatives = 4;
+
+      r.onresult = (e) => {
+        let text = '';
+        let isFinal = false;
+        for (let i = e.resultIndex; i < e.results.length; i++) {
+          const result = e.results[i];
+          text += result[0].transcript;
+          if (result.isFinal) {
+            isFinal = true;
+            handleFinal(result);
+          }
+        }
+        showSubtitle(text, isFinal);
+      };
+
+      r.onerror = (e) => {
+        if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+          stopListening();
+          showToast('Microphone access is blocked', 'error');
+        } else if (e.error === 'network') {
+          stopListening();
+          showToast('Voice recognition needs an internet connection', 'error');
+        }
+        // 'no-speech' and 'aborted' are routine; onend restarts the session
+      };
+
+      // Chrome ends sessions after silence; keep listening until the user turns it off
+      r.onend = () => {
+        if (!state.listening) return;
+        restartTimer = setTimeout(() => {
+          try { r.start(); } catch { /* already running */ }
+        }, 250);
+      };
+      return r;
+    }
+
+    // Try every alternative the recogniser offers before giving up
+    function handleFinal(result) {
+      for (let i = 0; i < result.length; i++) {
+        const cmd = parseCommand(result[i].transcript);
+        if (cmd) return runCommand(cmd);
+      }
+      showToast('Try “grid nine”, “new kolam” or “colour red”', 'hint');
+    }
+
+    function setListeningUI(on) {
+      $('voice').classList.toggle('listening', on);
+      $('mic').setAttribute('aria-pressed', on);
+      $('mic').setAttribute('aria-label', on ? 'Stop listening (Space)' : 'Start listening (Space)');
+    }
+
+    function startListening() {
+      if (state.listening) return;
+      if (!SpeechRecognition) {
+        showToast('Voice control needs Chrome or Edge', 'error');
+        return;
+      }
+      state.listening = true;
+      setListeningUI(true);
+      recognition = recognition || createRecognition();
+      try { recognition.start(); } catch { /* already running */ }
+      startAudio();
+      startWave();
+    }
+
+    function stopListening() {
+      if (!state.listening) return;
+      state.listening = false;
+      setListeningUI(false);
+      clearTimeout(restartTimer);
+      if (recognition) recognition.stop();   // stop() still delivers the last final result
+      stopAudio();
+    }
+
+    const toggleListening = () => (state.listening ? stopListening() : startListening());
+
+    // English or Tamil speech. A running session restarts in the new language on its own,
+    // because onend restarts whenever we're still listening.
+    function setLang(lang, { announce = true } = {}) {
+      state.lang = lang;
+      document.body.dataset.lang = lang;
+      document.querySelectorAll('.lang-switch [data-lang]').forEach((b) =>
+        b.setAttribute('aria-checked', b.dataset.lang === lang));
+      try { localStorage.setItem('kolam-studio-lang', lang); } catch { /* storage unavailable */ }
+      if (recognition) {
+        recognition.lang = lang;
+        if (state.listening) recognition.stop();
+      }
+      if (announce) showToast(lang === 'ta-IN' ? 'தமிழ் · Tamil speech' : 'English speech');
+    }
+    document.querySelectorAll('.lang-switch [data-lang]').forEach((b) =>
+      b.addEventListener('click', () => setLang(b.dataset.lang)));
+    try {
+      const savedLang = localStorage.getItem('kolam-studio-lang');
+      if (savedLang === 'ta-IN') setLang(savedLang, { announce: false });
+    } catch { /* storage unavailable */ }
+    $('mic').addEventListener('click', toggleListening);
+
+    // Space toggles the microphone anywhere except text fields
+    document.addEventListener('keydown', (e) => {
+      if (e.code !== 'Space' || e.repeat) return;
+      if (e.target.closest('input[type="text"], textarea, [contenteditable]')) return;
+      e.preventDefault();
+      toggleListening();
+    });
+    // Stop a focused button from also activating on Space
+    document.addEventListener('keyup', (e) => {
+      if (e.code === 'Space' && !e.target.closest('input[type="text"], textarea, [contenteditable]')) e.preventDefault();
+    });
+
+    // ===== Live waveform (Web Audio analyser) =====
+    const audio = { ctx: null, stream: null, source: null, analyser: null, data: null };
+
+    async function startAudio() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: { echoCancellation: true, noiseSuppression: true },
+        });
+        if (!state.listening) {
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        audio.stream = stream;
+        audio.ctx = audio.ctx || new AudioContext();
+        await audio.ctx.resume();
+        audio.source = audio.ctx.createMediaStreamSource(stream);
+        audio.analyser = audio.ctx.createAnalyser();
+        audio.analyser.fftSize = 1024;
+        audio.analyser.smoothingTimeConstant = 0.6;
+        audio.source.connect(audio.analyser);
+        audio.data = new Uint8Array(audio.analyser.fftSize);
+      } catch {
+        // No analyser (permission or support): the ring falls back to a gentle idle shimmer
+      }
+    }
+
+    function stopAudio() {
+      if (audio.source) audio.source.disconnect();
+      if (audio.stream) audio.stream.getTracks().forEach((t) => t.stop());
+      audio.source = audio.stream = audio.analyser = null;
+    }
+
+    const waveCanvas = $('wave');
+    const wctx = waveCanvas.getContext('2d');
+    const WAVE_SIZE = 240;
+    let waveFrame = 0;
+    let waveAlpha = 0;
+    let voiceLevel = 0;
+
+    function sizeWave() {
+      const d = window.devicePixelRatio || 1;
+      waveCanvas.width = WAVE_SIZE * d;
+      waveCanvas.height = WAVE_SIZE * d;
+      wctx.setTransform(d, 0, 0, d, 0, 0);
+    }
+    sizeWave();
+
+    function startWave() {
+      if (!waveFrame) waveFrame = requestAnimationFrame(drawWave);
+    }
+
+    function drawWave(now) {
+      waveFrame = 0;
+      waveAlpha += ((state.listening ? 1 : 0) - waveAlpha) * 0.08;
+
+      let rms = 0;
+      if (audio.analyser) {
+        audio.analyser.getByteTimeDomainData(audio.data);
+        for (const v of audio.data) rms += ((v - 128) / 128) ** 2;
+        rms = Math.sqrt(rms / audio.data.length);
+      }
+      voiceLevel += (Math.min(1, rms * 5) - voiceLevel) * 0.2;
+      $('orbGlow').style.transform = `scale(${1 + voiceLevel * 0.9})`;
+
+      wctx.clearRect(0, 0, WAVE_SIZE, WAVE_SIZE);
+      if (waveAlpha > 0.01) {
+        drawWaveRing(now, 46, 1, 1);
+        drawWaveRing(now, 55, 0.45, -1);
+      }
+
+      if (state.listening || waveAlpha > 0.01) {
+        waveFrame = requestAnimationFrame(drawWave);
+      } else {
+        voiceLevel = 0;
+        $('orbGlow').style.transform = '';
+      }
+    }
+
+    function drawWaveRing(now, base, strength, dir) {
+      const c = WAVE_SIZE / 2;
+      const N = 128;
+      const half = N / 2;
+      const pts = [];
+      for (let i = 0; i < N; i++) {
+        const angle = (i / N) * Math.PI * 2 - Math.PI / 2;
+        // Mirror the samples around the circle so the ring closes without a seam
+        const k = i <= half ? i : N - i;
+        const sample = audio.analyser ? (audio.data[Math.floor((k / half) * (audio.data.length / 2 - 1))] - 128) / 128 : 0;
+        const idle = Math.sin(angle * 5 * dir + now * 0.002 * dir);
+        const r = base + (sample * (10 + 44 * voiceLevel) + idle * 1.4) * strength;
+        pts.push([c + Math.cos(angle) * r, c + Math.sin(angle) * r]);
+      }
+
+      // Smooth closed curve through the midpoints
+      wctx.beginPath();
+      const mid = (p, q) => [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2];
+      wctx.moveTo(...mid(pts[N - 1], pts[0]));
+      for (let i = 0; i < N; i++) wctx.quadraticCurveTo(...pts[i], ...mid(pts[i], pts[(i + 1) % N]));
+      wctx.closePath();
+
+      const brass = colorToRgb(css('--flame'));
+      wctx.lineWidth = 1.4;
+      wctx.strokeStyle = rgba(brass, (0.3 + 0.6 * voiceLevel) * strength * waveAlpha);
+      wctx.shadowColor = rgba(brass, 0.6 * waveAlpha);
+      wctx.shadowBlur = 8;
+      wctx.stroke();
+    }
+
+    // Once each entrance animation ends, hand control to normal transitions
+    document.querySelectorAll('.enter').forEach((el) => {
+      const done = (e) => {
+        if (e.target !== el) return;   // ignore animations bubbling up from children
+        el.classList.add('entered');
+        el.removeEventListener('animationend', done);
+      };
+      el.addEventListener('animationend', done);
+    });
+
+    // Phones start with the sheet resting at its peek (no slide-in entrance for it)
+    if (phoneQuery.matches) {
+      $('panel').classList.add('entered');
+      setPanelOpen(false);
+    }
+
+    // Let the threshold settle in before the first ripple of dots, then let the line begin once
+    // the dots are mostly in. The gallery needs the canvas measured to render its thumbnails.
+    function start() {
+      if (!size) return requestAnimationFrame(start);
+      initGallery();
+      setGrid(state.gridSize);
+      drawKolam({ delay: reducedMotion ? 0 : 700 });
+    }
+
+    // ===== Mic hint =====
+    let hintTimer = 0;
+    function showMicHint() {
+      if (state.listening) return;
+      $('micHint').classList.add('show');
+      document.body.classList.add('hinting');
+      hintTimer = setTimeout(hideMicHint, 9000);
+    }
+    function hideMicHint() {
+      clearTimeout(hintTimer);
+      $('micHint').classList.remove('show');
+      document.body.classList.remove('hinting');
+    }
+    $('micHint').addEventListener('click', () => {
+      hideMicHint();
+      startListening();
+    });
+    $('mic').addEventListener('click', hideMicHint);
+    document.addEventListener('keydown', (e) => { if (e.code === 'Space') hideMicHint(); });
+
+    // ===== Cheat sheet: tapping a phrase runs it as if spoken =====
+    document.querySelectorAll('.pill[data-say]').forEach((pill) => {
+      pill.addEventListener('click', () => {
+        const cmd = parseCommand(pill.dataset.say);
+        if (cmd) runCommand(cmd);
+      });
+    });
+
+    // ===== First-visit intro =====
+    // Black screen, கோலம் fades in, then the title and tagline. Two seconds later the title and
+    // the Tamil word glide into their places in the header, the page makes its entrance, and the
+    // demo kolam draws itself. Plays on a first visit, or whenever the URL has ?intro.
+    const INTRO_KEY = 'kolam-studio-intro-seen';
+
+    function playIntro() {
+      const intro = $('intro');
+      const header = document.querySelector('.header');
+      header.classList.add('entered');        // measured in its final place; hidden until the title lands
+      const timers = [];
+      let gliding = false;
+
+      const glide = () => {
+        if (gliding) return;
+        gliding = true;
+        timers.forEach(clearTimeout);
+        document.removeEventListener('keydown', skip, true);
+
+        intro.classList.add('stage-1', 'stage-2', 'gliding');
+        if (!reducedMotion) {
+          // Move each intro word onto its header twin: same font, so a translate and a uniform
+          // scale from the top-left corner land it exactly
+          for (const [from, to] of [[$('introTamil'), header.querySelector('.brand-tamil')], [$('introTitle'), header.querySelector('.brand')]]) {
+            // Measure the word's own box, without any fade-in motion still under way (a skip can
+            // land mid-transition), then let the glide transition start from there
+            from.style.transition = 'none';
+            from.style.transform = 'none';
+            const a = from.getBoundingClientRect();
+            const b = to.getBoundingClientRect();
+            void from.offsetWidth;
+            from.style.transition = '';
+            from.style.transformOrigin = '0 0';
+            from.style.transform = `translate(${b.left - a.left}px, ${b.top - a.top}px) scale(${b.width / a.width})`;
+          }
+        }
+        setTimeout(() => {
+          document.documentElement.classList.remove('intro-on');   // header shows, entrances resume
+          intro.remove();
+          try { localStorage.setItem(INTRO_KEY, '1'); } catch { /* storage unavailable */ }
+          start();
+          setTimeout(showMicHint, reducedMotion ? 600 : 2200);
+        }, reducedMotion ? 50 : 1050);
+      };
+
+      // Any click or key skips ahead to the glide (and Space doesn't also toggle the mic)
+      function skip(e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        glide();
+      }
+      document.addEventListener('keydown', skip, true);
+      intro.addEventListener('click', glide);
+
+      document.fonts.ready.then(() => {
+        if (gliding) return;
+        requestAnimationFrame(() => intro.classList.add('stage-1'));
+        timers.push(setTimeout(() => intro.classList.add('stage-2'), reducedMotion ? 300 : 1300));
+        timers.push(setTimeout(glide, reducedMotion ? 2300 : 1300 + 2000));
+      });
+    }
+
+    if (document.documentElement.classList.contains('intro-on')) playIntro();
+    else setTimeout(start, reducedMotion ? 0 : 650);
+  </script>
+</body>
+</html>
